@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - LIMS Lite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: "Source Sans Pro", sans-serif; background: #f0f2f6; margin: 0; padding: 40px; color: #333; }
+        .container { max-width: 900px; margin: 0 auto; background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid #333; }
+        h1 { margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 15px; display:flex; align-items:center; gap:10px; }
+        h2 { margin-top: 40px; font-size: 1.1rem; color: #555; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .btn-back { display: inline-block; margin-bottom: 20px; color: #666; text-decoration: none; font-weight: bold; }
+        .btn-primary { background: #333; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px; display: inline-block; border: none; cursor: pointer; font-weight: bold; }
+        .btn-danger { background: white; color: #d32f2f; border: 1px solid #d32f2f; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+        .btn-sm { padding: 5px 10px; font-size: 0.8rem; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 15px; border-bottom: 1px solid #eee; }
+        th { background: #f9f9f9; color: #666; font-size: 0.8rem; text-transform: uppercase; }
+        
+        .code-display { font-family: monospace; background: #e8eaf6; padding: 4px 8px; border-radius: 4px; color: #3f51b5; font-weight: bold; letter-spacing: 1px; }
+        .role-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        .role-Admin { background: #333; color: #fff; }
+        .role-User { background: #eee; color: #666; }
+        
+        .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin-top: 8px; }
+        .progress-fill { height: 100%; background: #4CAF50; }
+        .limit-warn { background: #FFC107; }
+        .limit-crit { background: #F44336; }
+        
+        /* Backup Section Styles */
+        .backup-row { display: flex; justify-content: space-between; align-items: center; padding: 15px; border-bottom: 1px solid #eee; }
+        .backup-row:hover { background: #fcfcfc; }
+        .backup-name { font-weight: 600; font-family: monospace; }
+        .backup-meta { font-size: 0.85rem; color: #888; margin-left: 10px; }
+        .upload-box { background: #e3f2fd; padding: 15px; border-radius: 6px; border: 1px dashed #2196F3; margin-top: 20px; display: flex; justify-content: space-between; align-items: center; }
+    </style>
+</head>
+<body>
+    <a href="/" class="btn-back">&larr; Back to Dashboard</a>
+    
+    <div class="container">
+        <h1><i class="fas fa-user-shield"></i> Admin Panel</h1>
+        
+        <div style="background: #fcfcfc; border: 1px solid #eee; padding: 20px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1; margin-right: 40px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:5px;">
+                    <strong>License Usage</strong>
+                    <span>{{ users|length }} / {{ limit }} Seats</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill {{ 'limit-warn' if usage > 70 else '' }} {{ 'limit-crit' if usage >= 100 else '' }}" style="width: {{ usage }}%;"></div>
+                </div>
+            </div>
+            
+            {% if users|length < limit %}
+            <form action="/admin/generate_invite" method="post" style="margin:0;">
+                <button class="btn-primary">Generate Invite Code</button>
+            </form>
+            {% else %}
+            <button class="btn-primary" disabled style="opacity:0.5; cursor:not-allowed;">Limit Reached</button>
+            {% endif %}
+        </div>
+
+        <h2><i class="fas fa-hdd"></i> Data Safety (Backups)</h2>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <div style="color:#666; font-size:0.9rem;">Backups run automatically every day at 03:00 AM.</div>
+            <form action="/admin/backup/create" method="post" style="margin:0;">
+                <button class="btn-primary btn-sm"><i class="fas fa-save"></i> Backup Now</button>
+            </form>
+        </div>
+
+        <div style="border: 1px solid #eee; border-radius: 6px; max-height: 300px; overflow-y: auto;">
+            {% for b in backups %}
+            <div class="backup-row">
+                <div>
+                    <i class="fas fa-file-archive" style="color:#ff9800; margin-right:10px;"></i>
+                    <span class="backup-name">{{ b.name }}</span>
+                    <span class="backup-meta">{{ b.size }} • {{ b.time }}</span>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <a href="/admin/backup/download/{{ b.name }}" class="btn-primary btn-sm" style="background:none; color:#2196F3; border:1px solid #ddd;"><i class="fas fa-download"></i></a>
+                    <form action="/admin/backup/restore_local" method="post" onsubmit="return confirm('DANGER: This will overwrite current data with this backup. Continue?');" style="margin:0;">
+                        <input type="hidden" name="filename" value="{{ b.name }}">
+                        <button class="btn-danger btn-sm" title="Restore this version"><i class="fas fa-history"></i> Restore</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+            {% if not backups %}<div style="padding:20px; text-align:center; color:#999;">No backups yet.</div>{% endif %}
+        </div>
+
+        <div class="upload-box">
+            <div><strong>Restore from File:</strong> Upload a previously downloaded .zip to restore.</div>
+            <form action="/admin/backup/restore" method="post" enctype="multipart/form-data" onsubmit="return confirm('WARNING: This will completely replace your database and files. Are you sure?');">
+                <input type="file" name="file" accept=".zip" required>
+                <button class="btn-danger btn-sm">Upload & Restore</button>
+            </form>
+        </div>
+
+        <h2><i class="fas fa-ticket-alt"></i> Pending Invites</h2>
+        {% if invites %}
+            <table>
+                <thead><tr><th>Code</th><th>Created By</th><th>Link</th></tr></thead>
+                <tbody>
+                    {% for i in invites %}
+                    <tr>
+                        <td><span class="code-display">{{ i.code }}</span></td>
+                        <td>{{ i.created_by }}</td>
+                        <td><a href="/register?code={{ i.code }}" target="_blank" style="color: #2196F3; text-decoration: none;">Copy Link</a></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div style="padding:20px; text-align:center; color:#999; border: 1px dashed #eee; margin-top: 10px;">No active invites. Click "Generate Invite" above to create one.</div>
+        {% endif %}
+
+        <h2><i class="fas fa-users"></i> User Management</h2>
+        <table>
+            <thead><tr><th>Username</th><th>Role</th><th>Last Active</th><th>Action</th></tr></thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td style="font-weight:600;">{{ u.username }}</td>
+                    <td>
+                        <span class="role-badge role-{{ u.role }}">{{ u.role }}</span>
+                    </td>
+                    <td style="color:#666; font-size:0.9rem;">{{ u.last_active.strftime('%Y-%m-%d') }}</td>
+                    <td>
+                        {% if u.id != user.id %}
+                            <div style="display:flex; gap:10px;">
+                                <form action="/admin/toggle_role" method="post" style="margin:0;">
+                                    <input type="hidden" name="user_id" value="{{ u.id }}">
+                                    {% if u.role == 'User' %}
+                                        <button class="btn-sm" style="color:#2e7d32; background:white; border:1px solid #2e7d32; cursor:pointer; border-radius:4px;">
+                                            <i class="fas fa-arrow-up"></i> Promote
+                                        </button>
+                                    {% else %}
+                                        <button class="btn-sm" style="color:#ef6c00; background:white; border:1px solid #ef6c00; cursor:pointer; border-radius:4px;">
+                                            <i class="fas fa-arrow-down"></i> Demote
+                                        </button>
+                                    {% endif %}
+                                </form>
+
+                                <form action="/admin/delete_user" method="post" onsubmit="return confirm('Remove user? This cannot be undone.');" style="margin:0;">
+                                    <input type="hidden" name="user_id" value="{{ u.id }}">
+                                    <button class="btn-danger btn-sm" style="border:none; color:red; background:none;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        {% else %}
+                            <span style="color:#ccc; font-size:0.9rem;">(Current User)</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Label: {{ box.name }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+        body { margin: 0; padding: 0; font-family: 'Roboto Mono', monospace; background: white; }
+        
+        /* Box Label Size: Approx 3" x 2" or credit card size */
+        .label-container {
+            width: 350px; 
+            height: 200px;
+            border: 1px dashed #ccc; /* Border for screen preview only */
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header { display: flex; justify-content: space-between; align-items: flex-start; z-index: 2; }
+        .box-name { font-size: 1.4rem; font-weight: 700; margin: 0; line-height: 1.1; }
+        .box-loc { font-size: 0.9rem; color: #333; margin-top: 5px; }
+        
+        .footer { display: flex; justify-content: space-between; align-items: flex-end; z-index: 2; }
+        .meta { font-size: 0.7rem; color: #555; }
+        
+        /* Visual Color Strip */
+        .color-strip {
+            position: absolute;
+            top: 0; left: 0; bottom: 0;
+            width: 15px;
+            background-color: {{ box.color }};
+            z-index: 1;
+        }
+        
+        /* Mascot Background */
+        .mascot-bg {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 8rem;
+            color: {{ box.color }};
+            opacity: 0.1;
+            z-index: 0;
+        }
+
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none !important; }
+            .label-container { border: none; margin: 0; page-break-inside: avoid; }
+        }
+        .btn-print { padding: 10px 20px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="no-print" style="padding: 20px; background: #f0f2f6; border-bottom: 1px solid #ddd; margin-bottom: 20px;">
+        <button onclick="window.print()" class="btn-print">🖨️ Print Box Label</button>
+    </div>
+
+    <div class="label-container">
+        <div class="color-strip"></div>
+        <i class="mascot-bg fas {{ box.icon }}"></i>
+        
+        <div class="header" style="margin-left: 20px;">
+            <div>
+                <div class="box-name">{{ box.name }}</div>
+                <div class="box-loc">{{ box.freezer.name }} / {{ box.shelf }}</div>
+            </div>
+            <div id="qrcode"></div>
+        </div>
+
+        <div class="footer" style="margin-left: 20px;">
+            <div class="meta">
+                ID: BOX-{{ box.id }}<br>
+                Dim: {{ box.rows }}x{{ box.cols }}
+            </div>
+            <div style="font-size: 2rem; color: {{ box.color }};">
+                <i class="fas {{ box.icon }}"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var url = window.location.origin + "/box/{{ box.id }}";
+        new QRCode(document.getElementById("qrcode"), {
+            text: url, width: 70, height: 70,
+            colorDark : "#000000", colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    </script>
+</body>
+</html>

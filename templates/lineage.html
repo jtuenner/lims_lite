@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lineage: {{ sample.name }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true });
+    </script>
+    <style>
+        body { font-family: "Source Sans Pro", sans-serif; background: #f0f2f6; margin: 0; padding: 40px; text-align: center; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: inline-block; min-width: 800px; }
+        h1 { margin-top: 0; color: #333; }
+        .meta { color: #666; margin-bottom: 20px; }
+        .btn { padding: 8px 15px; background: #333; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; cursor: pointer; border:none; }
+        .chart-box { margin: 20px 0; border: 1px solid #eee; padding: 20px; border-radius: 8px; background: #fff; overflow: auto; }
+        
+        /* Legend Styles */
+        .legend { display: flex; gap: 15px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap; }
+        .legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.85rem; color: #555; }
+        .dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid transparent; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1><i class="fas fa-sitemap"></i> Sample Lineage</h1>
+        <div class="meta">Ancestry tree for <b>{{ sample.name }}</b></div>
+        
+        <div class="legend">
+            <div class="legend-item"><div class="dot" style="background:#333;"></div> Current</div>
+            <div class="legend-item"><div class="dot" style="background:#e3f2fd; border-color:#2196f3;"></div> Plasmid</div>
+            <div class="legend-item"><div class="dot" style="background:#e8f5e9; border-color:#4caf50;"></div> Cell Line</div>
+            <div class="legend-item"><div class="dot" style="background:#fff3e0; border-color:#ff9800;"></div> Antibody</div>
+            <div class="legend-item"><div class="dot" style="background:#f3e5f5; border-color:#9c27b0;"></div> Chemical</div>
+        </div>
+
+        <div class="chart-box" id="graphDiv">
+            <div class="mermaid">
+                {{ chart_def | safe }}
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px; display: flex; justify-content: center; gap: 10px;">
+            <a href="/box/{{ sample.box_id }}?highlight={{ sample.id }}" class="btn" style="background:#666;">&larr; Back to Box</a>
+            <button onclick="downloadSVG()" class="btn" style="background:#2196F3;"><i class="fas fa-download"></i> Download Image</button>
+        </div>
+    </div>
+
+    <script>
+        function downloadSVG() {
+            const svg = document.querySelector('.mermaid svg');
+            const data = new XMLSerializer().serializeToString(svg);
+            const blob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'lineage_{{ sample.name }}.svg';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Label: {{ sample.name }}</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
+        
+        body { margin: 0; padding: 0; font-family: 'Roboto Mono', monospace; background: white; }
+        
+        /* Simulating a standard 2" x 1" Cryo Label */
+        .label-container {
+            width: 300px; 
+            height: 150px;
+            border: 1px dashed #ccc; /* Border for screen preview only */
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 20px;
+        }
+
+        .text-area { flex: 1; padding-right: 10px; overflow: hidden; }
+        .qr-area { width: 80px; height: 80px; flex-shrink: 0; }
+        
+        .sample-id { font-size: 0.8rem; font-weight: bold; }
+        .sample-name { font-size: 1.1rem; font-weight: 700; margin: 5px 0; line-height: 1.1; word-wrap: break-word; }
+        .meta { font-size: 0.7rem; color: #333; }
+        
+        /* Print Styles - Hides buttons, removes borders */
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none !important; }
+            .label-container { border: none; margin: 0; page-break-inside: avoid; }
+        }
+
+        .btn-print { padding: 10px 20px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <div class="no-print" style="padding: 20px; background: #f0f2f6; border-bottom: 1px solid #ddd; margin-bottom: 20px;">
+        <button onclick="window.print()" class="btn-print">🖨️ Print Label</button>
+        <div style="margin-top: 10px; color: #666; font-size: 0.9rem;">
+            Tip: Set your printer paper size to your label size (e.g., 2"x1") and margins to "None".
+        </div>
+    </div>
+
+    <div class="label-container">
+        <img src="/api/qrcode/sample/{{ sample.id }}" style="width: 80px; height: 80px;">
+        
+        <div class="info">
+            <div class="name">{{ sample.name }}</div>
+            <div class="meta">{{ sample.owner }} | {{ sample.date }}</div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        // Generate QR Code pointing to this specific box/sample
+        // We use window.location.origin to get the current "localhost:8000" or server IP automatically
+        var url = window.location.origin + "/box/{{ sample.box_id }}";
+        
+        new QRCode(document.getElementById("qrcode"), {
+            text: url,
+            width: 80,
+            height: 80,
+            colorDark : "#000000",
+            colorLight : "#ffffff",
+            correctLevel : QRCode.CorrectLevel.H
+        });
+    </script>
+
+</body>
+</html>

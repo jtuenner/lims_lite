@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Inventory & Orders</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #f0f2f6; --sidebar-bg: #ffffff; --text-color: #31333F; --primary-color: #ff4b4b; --secondary-color: #262730; }
+        body { font-family: "Source Sans Pro", sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; display: flex; height: 100vh; }
+        
+        /* Sidebar (Standard) */
+        .sidebar { width: 300px; background: var(--sidebar-bg); padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; flex-shrink: 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 2rem; }
+        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: #333; text-decoration: none; border-radius: 6px; margin-bottom: 8px; font-weight: 600; transition: background 0.2s; }
+        .sidebar-link:hover { background: #f0f0f0; } .sidebar-link.active { background: #ffebeb; color: var(--primary-color); } .sidebar-link i { width: 20px; text-align: center; }
+        
+        .main-content { flex: 1; padding: 3rem 5rem; overflow-y: auto; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        
+        /* TABS */
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .tab-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid transparent; cursor: pointer; font-weight: 600; color: #666; background: none; }
+        .tab-btn.active { background: #333; color: white; }
+        .tab-btn:hover:not(.active) { background: #ddd; }
+        
+        /* TABLES */
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+        th { background: #f8f9fa; font-size: 0.85rem; text-transform: uppercase; color: #666; }
+        tr:hover { background: #fcfcfc; }
+        
+        /* STATUS BADGES */
+        .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        .status-Pending { background: #FFF8E1; color: #FF8F00; }
+        .status-Approved { background: #E3F2FD; color: #1976D2; }
+        .status-Ordered { background: #F3E5F5; color: #7B1FA2; }
+        .status-Received { background: #E8F5E9; color: #388E3C; }
+        .low-stock-alert { color: #d32f2f; font-weight: bold; font-size: 0.8rem; background: #ffebeb; padding: 2px 6px; border-radius: 4px; }
+
+        .btn-action { border: 1px solid #ddd; background: white; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+        .btn-action:hover { background: #f0f0f0; }
+        .btn-primary { background: var(--primary-color); color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+
+        .section-title { font-size: 1.1rem; font-weight: bold; color: #555; margin: 30px 0 15px 0; display:flex; align-items:center; gap:10px; }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 450px; }
+        input, select, textarea { width: 100%; padding: 8px; margin: 5px 0 15px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo"><i class="fas fa-flask"></i> LIMS Lite</div>
+        <a href="/" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/labs" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Lab Calendars</a>
+        <a href="/projects" class="sidebar-link"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="/templates" class="sidebar-link"><i class="fas fa-file-alt"></i> Templates</a>
+        <a href="/inventory" class="sidebar-link active"><i class="fas fa-boxes"></i> Inventory</a>
+        {% if user.role == 'Admin' %}<a href="/admin" class="sidebar-link" style="color:#d32f2f;"><i class="fas fa-user-shield"></i> Admin Panel</a>{% endif %}
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Consumables & Orders</h1>
+            <div>
+                <button onclick="document.getElementById('newRequestModal').style.display='flex'" class="btn-primary" style="background:#333;">+ Special Request</button>
+                <button onclick="document.getElementById('newItemModal').style.display='flex'" class="btn-primary">+ Add Item</button>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('all')" id="btn-all">All Items</button>
+            <button class="tab-btn" onclick="switchTab('orders')" id="btn-orders">
+                To Order / Low Stock 
+                {% if orders|length > 0 %}<span style="background:#d32f2f; color:white; padding:1px 5px; border-radius:10px; font-size:0.7rem; margin-left:5px;">{{ orders|length }}</span>{% endif %}
+            </button>
+        </div>
+
+        <div id="view-all">
+            <table>
+                <thead><tr><th>Name</th><th>Category</th><th>Location</th><th>Quantity</th><th>Status</th><th>Actions</th></tr></thead>
+                <tbody>
+                    {% for i in items %}
+                    <tr>
+                        <td style="font-weight:600;">{{ i.name }}</td>
+                        <td>{{ i.category }}</td>
+                        <td>{{ i.location }}</td>
+                        <td>
+                            {{ i.quantity }} {{ i.unit }}
+                            <i class="fas fa-pencil-alt" style="color:#ccc; cursor:pointer; margin-left:5px; font-size:0.8rem;" onclick="openEditQty({{ i.id }}, {{ i.quantity }})"></i>
+                        </td>
+                        <td>
+                            {% if i.quantity <= i.min_level %}<span class="low-stock-alert">LOW STOCK</span>{% endif %}
+                            {% if i.order_flag %}<span class="status-badge status-Pending">Flagged</span>{% endif %}
+                        </td>
+                        <td>
+                            <form action="/inventory/delete" method="post" onsubmit="return confirm('Delete item?');" style="display:inline;">
+                                <input type="hidden" name="id" value="{{ i.id }}">
+                                <button style="border:none; background:none; color:#ccc; cursor:pointer;"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div id="view-orders" style="display:none;">
+            
+            <div class="section-title"><i class="fas fa-exclamation-circle" style="color:#d32f2f;"></i> Low Stock Alerts</div>
+            <table>
+                <thead><tr><th>Item</th><th>Current Qty</th><th>Min Level</th><th>Action</th></tr></thead>
+                <tbody>
+                    {% set low_stock_items = items | selectattr("quantity", "le", 5) | list %} {% for i in items %}
+                        {% if i.quantity <= i.min_level %}
+                        <tr>
+                            <td><b>{{ i.name }}</b></td>
+                            <td style="color:#d32f2f; font-weight:bold;">{{ i.quantity }} {{ i.unit }}</td>
+                            <td>{{ i.min_level }}</td>
+                            <td>
+                                <button class="btn-primary" style="padding:4px 10px; font-size:0.8rem;" onclick="quickRequest('{{ i.name }}', 'Restock: Low Level')">Request Restock</button>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+            </table>
+
+            <div class="section-title"><i class="fas fa-shopping-cart"></i> Active Requests</div>
+            <table>
+                <thead><tr><th>Item</th><th>Requester</th><th>Status</th><th>Date</th><th>Admin Actions</th></tr></thead>
+                <tbody>
+                    {% for req in orders %}
+                    <tr>
+                        <td>
+                            <div style="font-weight:bold;">{{ req.item_name }} <small>x{{ req.quantity }}</small></div>
+                            {% if req.url %}<a href="{{ req.url }}" target="_blank" style="font-size:0.8rem; color:#2196F3;">Link</a>{% endif %}
+                        </td>
+                        <td>{{ req.requester }}</td>
+                        <td><span class="status-badge status-{{ req.status }}">{{ req.status }}</span></td>
+                        <td>{{ req.created_at.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            {% if user.role == 'Admin' %}
+                            <form action="/orders/update_status" method="post" style="display:inline;">
+                                <input type="hidden" name="req_id" value="{{ req.id }}">
+                                {% if req.status == 'Pending' %}
+                                    <button name="status" value="Approved" class="btn-action" style="color:blue; border-color:blue;">Approve</button>
+                                {% elif req.status == 'Approved' %}
+                                    <button name="status" value="Ordered" class="btn-action" style="color:purple; border-color:purple;">Mark Ordered</button>
+                                {% elif req.status == 'Ordered' %}
+                                    <button name="status" value="Received" class="btn-action" style="color:green; border-color:green;">Receive</button>
+                                {% endif %}
+                            </form>
+                            {% else %}
+                            <span style="color:#ccc; font-size:0.8rem;">(Wait for Admin)</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if orders|length == 0 %}<tr><td colspan="5" style="text-align:center; color:#999;">No active orders.</td></tr>{% endif %}
+                </tbody>
+            </table>
+
+            <div style="margin-top:30px; font-size:0.9rem; color:#888;"><b>Recently Received:</b> 
+                {% for h in history %} {{ h.item_name }} ({{ h.updated_at.strftime('%m/%d') }}), {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div id="newItemModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Inventory Item</h3>
+            <form action="/inventory/create" method="post">
+                <label>Name</label><input type="text" name="name" required>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><label>Category</label><select name="category"><option>Reagent</option><option>Plasticware</option><option>Kit</option><option>Glassware</option><option>Other</option></select></div>
+                    <div><label>Location</label><input type="text" name="location" placeholder="Shelf A"></div>
+                </div>
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><label>Quantity</label><input type="number" name="quantity" value="1"></div>
+                    <div><label>Unit</label><input type="text" name="unit" value="box"></div>
+                </div>
+                <label>Min Level (Alert)</label><input type="number" name="min_level" value="5">
+                <button class="btn-primary" style="width:100%;">Add Item</button>
+                <button type="button" onclick="document.getElementById('newItemModal').style.display='none'" style="width:100%; background:none; border:none; color:#666; cursor:pointer; margin-top:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="newRequestModal" class="modal">
+        <div class="modal-content">
+            <h3>New Order Request</h3>
+            <form action="/orders/request" method="post">
+                <label>Item Name</label><input type="text" name="item_name" id="reqName" required>
+                <label>URL / Catalog #</label><input type="text" name="url">
+                <label>Quantity</label><input type="number" name="qty" value="1">
+                <label>Reason / Note</label><input type="text" name="reason" id="reqReason">
+                <button class="btn-primary" style="width:100%;">Submit Request</button>
+                <button type="button" onclick="document.getElementById('newRequestModal').style.display='none'" style="width:100%; background:none; border:none; color:#666; cursor:pointer; margin-top:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="qtyModal" class="modal">
+        <div class="modal-content" style="width:300px;">
+            <h3>Update Quantity</h3>
+            <form action="/inventory/set_qty" method="post" id="qtyForm">
+                <input type="hidden" name="id" id="qtyId">
+                <input type="number" name="qty" id="qtyVal" style="font-size:2rem; text-align:center;">
+                <button class="btn-primary" style="width:100%;">Update</button>
+                <button type="button" onclick="document.getElementById('qtyModal').style.display='none'" style="width:100%; background:none; border:none; color:#666; cursor:pointer; margin-top:10px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Tab Logic
+        function switchTab(tab) {
+            document.getElementById('view-all').style.display = (tab === 'all') ? 'block' : 'none';
+            document.getElementById('view-orders').style.display = (tab === 'orders') ? 'block' : 'none';
+            document.getElementById('btn-all').className = (tab === 'all') ? 'tab-btn active' : 'tab-btn';
+            document.getElementById('btn-orders').className = (tab === 'orders') ? 'tab-btn active' : 'tab-btn';
+            
+            // Update URL for persistence
+            const url = new URL(window.location);
+            url.searchParams.set('tab', tab);
+            window.history.pushState({}, '', url);
+        }
+
+        // Check URL on load
+        const urlParams = new URLSearchParams(window.location.search);
+        if(urlParams.get('tab') === 'orders') switchTab('orders');
+
+        // Quick Request Helper
+        function quickRequest(name, reason) {
+            document.getElementById('reqName').value = name;
+            document.getElementById('reqReason').value = reason;
+            document.getElementById('newRequestModal').style.display = 'flex';
+        }
+
+        // Qty Edit Helper
+        function openEditQty(id, current) {
+            document.getElementById('qtyId').value = id;
+            document.getElementById('qtyVal').value = current;
+            document.getElementById('qtyModal').style.display = 'flex';
+        }
+        
+        // Handle Qty Form via AJAX to avoid reload
+        document.getElementById('qtyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('qtyId').value;
+            const qty = document.getElementById('qtyVal').value;
+            
+            fetch('/inventory/set_qty', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({id: parseInt(id), qty: parseInt(qty)})
+            }).then(r => r.json()).then(d => {
+                location.reload(); 
+            });
+        });
+    </script>
+</body>
+</html>

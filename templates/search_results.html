@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search: {{ query }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #f0f2f6; --primary-color: #ff4b4b; --text-color: #31333F; --card-radius: 0.5rem; }
+        body { font-family: "Source Sans Pro", sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 300px; background: white; padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; flex-shrink: 0; }
+        .main-content { flex: 1; padding: 3rem 5rem; overflow-y: auto; }
+        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: #333; text-decoration: none; border-radius: 6px; margin-bottom: 8px; font-weight: 600; }
+        .sidebar-link:hover { background: #f0f0f0; } .sidebar-link.active { background: #ffebeb; color: var(--primary-color); }
+        
+        .result-section { margin-bottom: 3rem; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .result-header { font-size: 1.2rem; font-weight: 700; margin-bottom: 15px; border-bottom: 1px solid #eee; padding-bottom: 10px; color: #262730; }
+        .res-link { display: block; padding: 10px; border-bottom: 1px solid #f5f5f5; text-decoration: none; color: inherit; transition: background 0.1s; }
+        .res-link:hover { background: #f9f9f9; }
+        .res-title { font-weight: 600; }
+        .res-meta { color: #888; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div style="font-size:1.5rem; font-weight:700; color:#262730; margin-bottom:2rem;">LIMS Lite</div>
+        <a href="/" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/labs" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Lab Calendars</a>
+        <a href="/projects" class="sidebar-link"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="/templates" class="sidebar-link"><i class="fas fa-file-alt"></i> Templates</a>
+        <a href="/inventory" class="sidebar-link"><i class="fas fa-boxes"></i> Inventory</a>
+        {% if user.role == 'Admin' %}
+        <a href="/admin" class="sidebar-link" style="color:#d32f2f;"><i class="fas fa-user-shield"></i> Admin Panel</a>
+        {% endif %}
+    </div>
+
+    <div class="main-content">
+        <h1>Search Results for "{{ query }}"</h1>
+
+        {% if results.samples %}
+        <div class="result-section">
+            <div class="result-header">Samples ({{ results.samples|length }})</div>
+            {% for s in results.samples %}
+            <a href="/box/{{ s.box_id if s.box else '#' }}" class="res-link">
+                <div class="res-title"><i class="fas fa-vial" style="color:var(--primary-color);"></i> {{ s.name }}</div>
+                <div class="res-meta">{{ s.sample_type }} • {{ s.box.name if s.box else 'Unboxed' }}</div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if results.inventory %}
+        <div class="result-section">
+            <div class="result-header">Inventory ({{ results.inventory|length }})</div>
+            {% for i in results.inventory %}
+            <a href="/inventory" class="res-link">
+                <div class="res-title"><i class="fas fa-box-open" style="color:#FF9800;"></i> {{ i.name }}</div>
+                <div class="res-meta">{{ i.quantity }} {{ i.unit }} • {{ i.category }}</div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if results.exps %}
+        <div class="result-section">
+            <div class="result-header">Experiments ({{ results.exps|length }})</div>
+            {% for e in results.exps %}
+            <a href="/projects/{{ e.project_id }}" class="res-link">
+                <div class="res-title"><i class="fas fa-flask" style="color:#2196F3;"></i> {{ e.name }}</div>
+                <div class="res-meta">{{ e.status }} • {{ e.date.strftime('%Y-%m-%d') }}</div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if results.tmpls %}
+        <div class="result-section">
+            <div class="result-header">Templates ({{ results.tmpls|length }})</div>
+            {% for t in results.tmpls %}
+            <a href="/templates" class="res-link">
+                <div class="res-title"><i class="fas fa-file-alt" style="color:#9C27B0;"></i> {{ t.name }}</div>
+                <div class="res-meta">{{ t.description }}</div>
+            </a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        {% if not results.samples and not results.items and not results.exps and not results.tmpls %}
+            <div style="text-align:center; color:#999; margin-top:50px;">No results found.</div>
+        {% endif %}
+    </div>
+</body>
+</html>

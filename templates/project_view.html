@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ project.name }} - Canvas</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #f0f2f6; --sidebar-bg: #ffffff; --text-color: #31333F; --primary-color: #ff4b4b; --secondary-color: #262730; }
+        body { font-family: "Source Sans Pro", sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; display: flex; height: 100vh; overflow: hidden; }
+        
+        .sidebar { width: 300px; background: var(--sidebar-bg); padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; flex-shrink: 0; z-index: 100; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 2rem; }
+        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: #333; text-decoration: none; border-radius: 6px; margin-bottom: 8px; font-weight: 600; transition: background 0.2s; }
+        .sidebar-link:hover { background: #f0f0f0; } .sidebar-link.active { background: #ffebeb; color: var(--primary-color); }
+        .sidebar-link i { width: 20px; text-align: center; }
+        .context-box { margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 6px; border: 1px solid #eee; }
+        
+        .canvas-container { flex: 1; position: relative; overflow: hidden; background-color: #f8f9fa; background-image: radial-gradient(#ccc 1px, transparent 1px); background-size: 20px 20px; }
+        #svgLayer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        line { stroke: #999; stroke-width: 2; marker-end: url(#arrow); }
+        
+        .exp-card { position: absolute; width: 220px; background: white; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 15px; cursor: pointer; border-top: 4px solid var(--primary-color); z-index: 10; transition: box-shadow 0.2s, transform 0.2s; user-select: none; }
+        .exp-card:hover { box-shadow: 0 8px 25px rgba(0,0,0,0.15); z-index: 20; }
+        .exp-card.status-Done { border-top-color: #4CAF50; }
+        .exp-card.status-InProgress { border-top-color: #2196F3; }
+        .exp-title { font-weight: 700; margin-bottom: 5px; font-size: 1rem; }
+        .exp-date { font-size: 0.75rem; background: #eee; padding: 2px 6px; border-radius: 4px; display: inline-flex; align-items: center; gap: 4px; margin-top: 5px; }
+        .exp-meta { font-size: 0.8rem; color: #666; display: flex; justify-content: space-between; margin-top: 10px; }
+        .linking-mode .exp-card { opacity: 0.5; }
+        .linking-mode .exp-card:hover { opacity: 1; border: 2px solid var(--primary-color); transform: scale(1.05); }
+        .linking-mode .exp-card.selected { opacity: 1; border: 2px dashed var(--primary-color); background: #ffebeb; }
+        
+        .toolbar { position: absolute; top: 20px; right: 20px; z-index: 50; background: white; padding: 10px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); display: flex; gap: 10px; }
+        .btn-tool { padding: 8px 15px; background: var(--primary-color); color: white; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; }
+        .btn-secondary { background: #333; }
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 700px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-height: 90vh; overflow-y: auto; }
+        textarea, input, select { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .sample-list { max-height: 150px; overflow-y: auto; background: #f9f9f9; border: 1px solid #eee; border-radius: 4px; padding: 10px; margin-top: 5px; }
+        .sample-item { padding: 5px; border-bottom: 1px solid #eee; font-size: 0.9rem; display: flex; justify-content: space-between; align-items: center; }
+        .btn-remove { color: red; cursor: pointer; margin-left: 10px; font-size: 0.8rem; }
+        .search-results { border: 1px solid #ddd; max-height: 150px; overflow-y: auto; display: none; margin-top: -10px; background: white; position: relative; z-index: 2000; border-radius: 0 0 4px 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: background 0.1s; }
+        .search-item:hover { background: #f0f0f0; }
+        .col-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        h4 { margin: 15px 0 5px 0; border-bottom: 2px solid #eee; padding-bottom: 5px; }
+        .file-link { display: block; padding: 5px; color: #2196F3; text-decoration: none; }
+        .file-link:hover { text-decoration: underline; }
+        /* Search Box Styles (Same as Dashboard) */
+        .search-container { position: relative; margin-bottom: 2rem; margin-top: 2rem;}
+        .search-input { width: 100%; padding: 0.7rem 0.7rem 0.7rem 2.2rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .search-icon { position: absolute; left: 10px; top: 13px; color: #888; font-size: 0.9rem; }
+        #searchResults { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 0 0 6px 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 1000; overflow: hidden; }
+        .search-item-main { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: background 0.1s; display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .search-item-main:hover { background: #f0f0f0; }
+        .search-tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; color: white; font-weight: bold; text-transform: uppercase; min-width: 60px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo"><i class="fas fa-flask"></i> LIMS Lite</div>
+        <a href="/" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/labs" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Lab Calendars</a>
+        <a href="/projects" class="sidebar-link active"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="/templates" class="sidebar-link"><i class="fas fa-file-alt"></i> Templates</a>
+        <a href="/inventory" class="sidebar-link"><i class="fas fa-boxes"></i> Inventory</a>
+        <a href="/orders" class="sidebar-link"><i class="fas fa-shopping-cart"></i> Orders</a>
+        
+        {% if user.role == 'Admin' %}
+        <a href="/admin" class="sidebar-link" style="color:#d32f2f;"><i class="fas fa-user-shield"></i> Admin Panel</a>
+        {% endif %}
+        
+        <div class="search-container">
+            <form action="/search" method="get" id="searchForm"><i class="fas fa-search search-icon"></i><input type="text" name="q" id="searchInput" class="search-input" placeholder="Search..." autocomplete="off"></form>
+            <div id="searchResults"></div>
+        </div>
+
+        <div class="context-box">
+            <div style="font-size:0.75rem; color:#888; text-transform:uppercase; margin-bottom:5px;">Viewing Project</div>
+            <div style="font-weight:bold; font-size:1rem; margin-bottom:5px;">{{ project.name }}</div>
+            <div style="font-size:0.85rem; color:#666;">{{ project.description }}</div>
+            <a href="/projects" style="display:block; margin-top:10px; font-size:0.85rem; text-decoration:none; color:#d32f2f;">&larr; Back to Projects</a>
+        </div>
+        
+        <div style="margin-top:auto; padding-top:15px; border-top:1px solid #eee;">
+            <div style="font-weight:bold; font-size:0.9rem;">👤 {{ user.username }}</div>
+            <a href="/logout" style="color:#d32f2f; text-decoration:none; font-size:0.85rem;">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="canvas-container" id="canvas">
+        <svg id="svgLayer">
+            <defs>
+                <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                    <path d="M0,0 L0,6 L9,3 z" fill="#999" />
+                </marker>
+            </defs>
+        </svg>
+
+        <div class="toolbar">
+            <button class="btn-tool" onclick="document.getElementById('newExpModal').style.display='flex'">+ Add Card</button>
+            <button class="btn-tool btn-secondary" onclick="toggleLinkMode()" id="btnLink">Link Cards</button>
+        </div>
+
+        {% for exp in project.experiments %}
+        <div class="exp-card status-{{ exp.status|replace(' ', '') }}" 
+             style="left: {{ exp.pos_x }}px; top: {{ exp.pos_y }}px;"
+             id="exp-{{ exp.id }}"
+             onmousedown="startDrag(event, {{ exp.id }})">
+             
+            <div class="exp-title">{{ exp.name }}</div>
+            <div style="font-size:0.85rem; color:#555; height: 35px; overflow:hidden;">{{ exp.description or 'No description' }}</div>
+            <div class="exp-date"><i class="far fa-calendar-alt"></i> {{ exp.date.strftime('%b %d') }}</div>
+            <div class="exp-meta"><span><i class="fas fa-vial"></i> {{ exp.samples|length }} Samples</span><span>{{ exp.status }}</span></div>
+            
+            <script type="application/json" id="data-{{ exp.id }}">
+                {
+                    "name": "{{ exp.name }}", 
+                    "desc": "{{ exp.description or '' }}", 
+                    "protocol": "{{ (exp.protocol or '') | replace('\n', '\\n') | replace('"', '\\"') }}", 
+                    "status": "{{ exp.status }}", 
+                    "date": "{{ exp.date.strftime('%Y-%m-%d') }}",
+                    "samples": [{% for s in exp.samples %}{"id": {{s.id}}, "name":"{{s.name}}", "loc":"{{s.box.name if s.box else 'Unboxed'}}"},{% endfor %}null],
+                    "bookings": [{% for b in exp.bookings %}{"res":"{{b.resource}}", "time":"{{b.start_time.strftime('%Y-%m-%d %H:%M')}}"},{% endfor %}null],
+                    "files": [{% for f in exp.attachments %}{"name":"{{f.filename}}", "path":"{{f.filepath}}"},{% endfor %}null]
+                }
+            </script>
+            <button style="width:100%; margin-top:10px; padding:5px; background:#eee; border:none; cursor:pointer; font-size:0.8rem;" onmousedown="event.stopPropagation(); openDetailModal({{ exp.id }})">View Details</button>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="newExpModal" class="modal">
+        <div class="modal-content" style="width: 400px;">
+            <h3>New Experiment</h3>
+            <form action="/experiments/create" method="post">
+                <input type="hidden" name="project_id" value="{{ project.id }}">
+                <label>Name</label><input type="text" name="name" required>
+                <label>Load from Template (Optional)</label>
+                <select name="template_id"><option value="0">-- Blank --</option>{% for t in templates %}<option value="{{ t.id }}">{{ t.name }}</option>{% endfor %}</select>
+                <label>Description</label><textarea name="description" rows="3"></textarea>
+                <button type="submit" class="btn-tool" style="width:100%;">Add to Canvas</button>
+                <button type="button" onclick="document.getElementById('newExpModal').style.display='none'" style="width:100%; margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="detailModal" class="modal">
+        <div class="modal-content" style="width: 800px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2 id="detName" style="margin:0;"></h2>
+                <div style="display:flex; gap:15px; align-items:center;">
+                    <a href="#" id="btnRun" class="btn-tool" style="text-decoration:none; padding:5px 15px; font-size:0.8rem; background:#2196F3;">
+                        <i class="fas fa-play"></i> Run Protocol
+                    </a>
+                    <a href="#" id="btnReport" target="_blank" style="color:#666; text-decoration:none; font-size:0.9rem;">
+                        <i class="fas fa-print"></i> Print Report
+                    </a>
+                    <span onclick="document.getElementById('detailModal').style.display='none'" style="cursor:pointer; font-size:1.5rem;">&times;</span>
+                </div>
+            </div>
+            
+            <div style="margin-top:15px; display: grid; grid-template-columns: 1fr 1fr; gap:10px;"><div><label>Status</label><select id="detStatus"><option value="Planning">Planning</option><option value="In Progress">In Progress</option><option value="Done">Done</option></select></div><div><label>Planned Date</label><input type="date" id="detDate"></div></div>
+            <div class="col-2">
+                <div><h4>1. Protocol & Notes</h4><label>Description</label><input type="text" id="detDesc"><label>Lab Protocol</label><textarea id="detProtocol" rows="10"></textarea></div>
+                <div><h4>2. Resources</h4><label>Samples</label><input type="text" id="sampleSearch" placeholder="Search..." onkeyup="searchSamples(this.value)"><div class="search-results" id="searchResults"></div><div class="sample-list" id="detSamples"></div><label style="margin-top:15px;">Bookings</label><div class="sample-list" id="detBookings"></div><button onclick="openBookingModal()" style="width:100%; margin-top:5px; padding:5px; background:#eee; border:none; cursor:pointer;">+ Book Room</button><label style="margin-top:15px;">Files</label><div class="sample-list" id="detFiles"></div><form action="/api/experiment/upload" method="post" enctype="multipart/form-data" id="uploadForm"><input type="hidden" name="experiment_id" id="uploadExpId"><input type="file" name="file" onchange="document.getElementById('uploadForm').submit()" style="margin-top:5px;"></form></div>
+            </div>
+            <button class="btn-tool" onclick="saveDetails()" style="margin-top:20px; width:100%;">Save Protocol & Changes</button>
+            <input type="hidden" id="detId">
+        </div>
+    </div>
+
+    <div id="bookingModal" class="modal" style="z-index: 1100;">
+        <div class="modal-content" style="width:350px;">
+            <h3>Book Room</h3>
+            <label>Select Room</label>
+            <select id="bookLab" onchange="updateResources()">
+                <option value="" disabled selected>-- Choose a Room --</option>
+                {% for lab in labs %}
+                    <option value="{{ lab.id }}">📍 {{ lab.name }} ({{ lab.location }})</option>
+                {% endfor %}
+            </select>
+            
+            <label>Select Resource</label>
+            <select id="bookRes" disabled>
+                <option value="">-- First Select Room --</option>
+            </select>
+            
+            <div style="display:flex; gap:10px;"><div><label>Start</label><input type="datetime-local" id="bookStart"></div><div><label>End</label><input type="datetime-local" id="bookEnd"></div></div>
+            <button class="btn-tool" style="width:100%;" onclick="submitBooking()">Confirm Booking</button>
+            <button onclick="document.getElementById('bookingModal').style.display='none'" style="width:100%; margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        // Load Lab Resources from backend
+        const labResources = {{ lab_resources | tojson }};
+        
+        function updateResources() {
+            const labId = document.getElementById('bookLab').value;
+            const resSelect = document.getElementById('bookRes');
+            resSelect.innerHTML = '<option value="" disabled selected>-- Choose Equipment --</option>';
+            resSelect.disabled = false;
+            
+            if(labResources[labId]) {
+                labResources[labId].forEach(r => {
+                    const opt = document.createElement('option');
+                    opt.value = r;
+                    opt.innerText = r;
+                    resSelect.appendChild(opt);
+                });
+            }
+        }
+
+        const links = [{% for link in links %}{ source: {{ link.source_id }}, target: {{ link.target_id }} },{% endfor %}];
+        window.onload = drawLines;
+        function drawLines() { const svg = document.getElementById('svgLayer'); svg.innerHTML = '<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth"><path d="M0,0 L0,6 L9,3 z" fill="#999" /></marker></defs>'; links.forEach(link => { const src = document.getElementById('exp-' + link.source); const tgt = document.getElementById('exp-' + link.target); if(src && tgt) { const x1 = parseInt(src.style.left) + 110; const y1 = parseInt(src.style.top) + 50; const x2 = parseInt(tgt.style.left) + 110; const y2 = parseInt(tgt.style.top) + 50; const line = document.createElementNS('http://www.w3.org/2000/svg','line'); line.setAttribute('x1', x1); line.setAttribute('y1', y1); line.setAttribute('x2', x2); line.setAttribute('y2', y2); svg.appendChild(line); } }); }
+        let activeCard = null; let offset = { x: 0, y: 0 };
+        function startDrag(e, id) { if(isLinkMode) { handleLinkClick(id); return; } if(e.target.tagName === 'BUTTON') return; activeCard = document.getElementById('exp-' + id); offset.x = e.clientX - activeCard.offsetLeft; offset.y = e.clientY - activeCard.offsetTop; document.addEventListener('mousemove', drag); document.addEventListener('mouseup', stopDrag); }
+        function drag(e) { if (!activeCard) return; e.preventDefault(); activeCard.style.left = (e.clientX - offset.x) + 'px'; activeCard.style.top = (e.clientY - offset.y) + 'px'; drawLines(); }
+        function stopDrag() { if (activeCard) { const id = activeCard.id.replace('exp-', ''); fetch('/api/experiment/move', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ id: parseInt(id), x: parseInt(activeCard.style.left), y: parseInt(activeCard.style.top) }) }); } activeCard = null; document.removeEventListener('mousemove', drag); document.removeEventListener('mouseup', stopDrag); }
+        let isLinkMode = false; let linkSourceId = null;
+        function toggleLinkMode() { isLinkMode = !isLinkMode; const btn = document.getElementById('btnLink'); const canvas = document.getElementById('canvas'); if(isLinkMode) { btn.innerText = "Cancel Linking"; btn.style.background = "#333"; canvas.classList.add('linking-mode'); } else { btn.innerText = "Link Cards"; btn.style.background = ""; canvas.classList.remove('linking-mode'); linkSourceId = null; document.querySelectorAll('.exp-card').forEach(el => el.classList.remove('selected')); } }
+        function handleLinkClick(id) { if(linkSourceId === null) { linkSourceId = id; document.getElementById('exp-' + id).classList.add('selected'); } else { if(linkSourceId !== id) createLink(linkSourceId, id); toggleLinkMode(); } }
+        function createLink(source, target) { fetch('/api/experiment/link', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ project_id: {{ project.id }}, source_id: source, target_id: target }) }).then(r => r.json()).then(d => { if(d.status === 'success') { links.push({source: source, target: target}); drawLines(); } }); }
+        
+        function openDetailModal(id) { 
+            const data = JSON.parse(document.getElementById('data-' + id).textContent); 
+            document.getElementById('detId').value = id; 
+            document.getElementById('uploadExpId').value = id; 
+            
+            // Set dynamic links for Report and Run
+            document.getElementById('btnReport').href = `/experiments/${id}/report`; 
+            document.getElementById('btnRun').href = `/experiment/${id}/run`; // NEW LINK
+            
+            document.getElementById('detName').innerText = data.name; 
+            document.getElementById('detDesc').value = data.desc; 
+            document.getElementById('detProtocol').value = data.protocol || ''; 
+            document.getElementById('detStatus').value = data.status; 
+            document.getElementById('detDate').value = data.date; 
+            
+            let sHtml = ''; data.samples.forEach(s => { if(s) sHtml += `<div class=\"sample-item\"><span>${s.name} <small>(${s.loc})</small></span><span class=\"btn-remove\" onclick=\"removeSample(${s.id})\">&times;</span></div>`; }); document.getElementById('detSamples').innerHTML = sHtml || '<div style=\"color:#ccc; text-align:center;\">No samples linked</div>'; let bHtml = ''; data.bookings.forEach(b => { if(b) bHtml += `<div class=\"sample-item\"><span>${b.res}</span><span style=\"color:#888\">${b.time}</span></div>`; }); document.getElementById('detBookings').innerHTML = bHtml || '<div style=\"color:#ccc; text-align:center;\">No bookings</div>'; let fHtml = ''; data.files.forEach(f => { if(f) fHtml += `<div class=\"sample-item\"><a href=\"/${f.path}\" target=\"_blank\" class=\"file-link\">${f.name}</a></div>`; }); document.getElementById('detFiles').innerHTML = fHtml || '<div style=\"color:#ccc; text-align:center;\">No files</div>'; document.getElementById('detailModal').style.display = 'flex'; 
+        }
+        
+        function searchSamples(q) { const resBox = document.getElementById('searchResults'); if(q.length < 2) { resBox.style.display='none'; return; } fetch(`/api/search_autocomplete?q=${q}`).then(r=>r.json()).then(d=>{ if(d.length > 0) { let html = ''; d.forEach(i => html += `<div class=\"search-item\" onclick=\"addSample(${i.id})\"><b>${i.name}</b> <span style=\"color:#888\">in ${i.box_name}</span></div>`); resBox.innerHTML = html; resBox.style.display='block'; } else resBox.style.display='none'; }); }
+        function addSample(sid) { const eid = document.getElementById('detId').value; fetch('/api/experiment/add_sample', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ experiment_id: parseInt(eid), sample_id: parseInt(sid) }) }).then(() => location.reload()); }
+        function removeSample(sid) { fetch('/api/experiment/remove_sample', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ sample_id: parseInt(sid) }) }).then(() => location.reload()); }
+        function saveDetails() { fetch('/api/experiment/update_details', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ id: parseInt(document.getElementById('detId').value), description: document.getElementById('detDesc').value, protocol: document.getElementById('detProtocol').value, status: document.getElementById('detStatus').value, date: document.getElementById('detDate').value }) }).then(() => location.reload()); }
+        function openBookingModal() { document.getElementById('bookingModal').style.display='flex'; }
+        function submitBooking() {
+            const labId = document.getElementById('bookLab').value;
+            const resVal = document.getElementById('bookRes').value;
+            if(!labId || !resVal) { alert("Select Room and Resource!"); return; }
+            fetch('/api/bookings/create', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ title: "Exp: " + document.getElementById('detName').innerText, resource: resVal, lab_id: parseInt(labId), experiment_id: parseInt(document.getElementById('detId').value), start: document.getElementById('bookStart').value, end: document.getElementById('bookEnd').value, user: "Current User" }) }).then(() => { alert("Room Booked!"); location.reload(); });
+        }
+        
+        // Search Logic
+        const searchInput = document.getElementById('searchInput'); 
+        const resultsBox = document.getElementById('searchResults'); 
+        let timer;
+        searchInput.addEventListener('input', e => { 
+            const q = e.target.value; clearTimeout(timer); if(q.length < 2) { resultsBox.style.display='none'; return; } 
+            timer = setTimeout(() => { fetch(`/api/search_autocomplete?q=${q}`).then(r => r.json()).then(d => { if(d.length > 0) { let html = ''; d.forEach(i => { html += `<a href="${i.url}" class="search-item-main"><div class="search-tag" style="background:${i.color}">${i.category}</div><div style="flex:1;"><div style="font-weight:600;">${i.name}</div><div style="font-size:0.8rem; color:#888;">${i.info}</div></div><i class="fas ${i.icon}" style="color:#ccc;"></i></a>`; }); html += `<div onclick="document.getElementById('searchForm').submit()" style="padding:10px; text-align:center; font-size:0.8rem; color:#666; cursor:pointer; background:#f5f5f5;">View All Results</div>`; resultsBox.innerHTML = html; resultsBox.style.display='block'; } else { resultsBox.style.display='none'; } }); }, 300); 
+        });
+        document.addEventListener('click', function(e) { if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) { resultsBox.style.display = 'none'; } });
+    </script>
+</body>
+</html>

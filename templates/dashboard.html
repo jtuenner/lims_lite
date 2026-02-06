@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LIMS Lite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === GLOBAL VARIABLES === */
+        :root { --bg-color: #f0f2f6; --sidebar-bg: #ffffff; --text-color: #31333F; --primary-color: #ff4b4b; --secondary-color: #262730; --card-radius: 0.5rem; }
+        body { font-family: "Source Sans Pro", sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; display: flex; height: 100vh; }
+        
+        /* Sidebar */
+        .sidebar { width: 300px; background: var(--sidebar-bg); padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; flex-shrink: 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 2rem; }
+        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: #333; text-decoration: none; border-radius: 6px; margin-bottom: 8px; font-weight: 600; transition: background 0.2s; }
+        .sidebar-link:hover { background: #f0f0f0; } .sidebar-link.active { background: #ffebeb; color: var(--primary-color); }
+        .sidebar-link i { width: 20px; text-align: center; }
+        
+        .search-container { position: relative; margin-bottom: 2rem; margin-top: 2rem;}
+        .search-input { width: 100%; padding: 0.7rem 0.7rem 0.7rem 2.2rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .search-icon { position: absolute; left: 10px; top: 13px; color: #888; font-size: 0.9rem; }
+        #searchResults { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 0 0 6px 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 1000; overflow: hidden; }
+        .search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: background 0.1s; display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .search-item:hover { background: #f0f0f0; }
+        .search-tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; color: white; font-weight: bold; text-transform: uppercase; min-width: 60px; text-align: center; }
+
+        .main-content { flex: 1; padding: 3rem 5rem; overflow-y: auto; position: relative; }
+
+        /* === TOP GRID (Productivity) === */
+        .top-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+        
+        .panel { background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; }
+        .panel h3 { margin: 0 0 15px 0; color: var(--secondary-color); font-size: 1.1rem; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        
+        /* Agenda List */
+        .agenda-list { overflow-y: auto; max-height: 250px; }
+        .agenda-item { display: flex; gap: 15px; padding: 10px 0; border-bottom: 1px solid #f5f5f5; align-items: center; text-decoration: none; color: inherit; transition: background 0.1s; }
+        .agenda-item:hover { background: #f9f9f9; }
+        .agenda-date { font-weight: bold; color: #888; font-size: 0.85rem; width: 50px; text-align: center; }
+        .agenda-icon { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0; }
+        .agenda-type-experiment { background: #2196F3; }
+        .agenda-type-booking { background: #FF9800; }
+        
+        /* Tools (Notes & Timer) */
+        .notes-area { width: 100%; height: 100px; border: 1px solid #ddd; border-radius: 4px; padding: 10px; font-family: inherit; font-size: 0.9rem; resize: none; box-sizing: border-box; background: #fffdf0; margin-bottom: 15px; }
+        .notes-area:focus { outline: none; border-color: #999; }
+        
+        .timer-box { background: #333; color: white; padding: 10px; border-radius: 6px; display: flex; align-items: center; justify-content: space-between; }
+        .timer-display { font-family: 'Courier New', monospace; font-size: 1.5rem; font-weight: bold; }
+        .timer-controls { display: flex; gap: 5px; }
+        .btn-timer { background: #555; border: none; color: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        .btn-timer:hover { background: #666; }
+        .timer-input { width: 50px; background: #444; border: none; color: white; padding: 5px; border-radius: 3px; text-align: center; }
+
+        /* === FLOATING PETRI WIDGET (FIXED SIZE) === */
+        #petriWidget {
+            position: fixed; bottom: 30px; right: 30px;
+            width: 160px; /* Fixed Width */
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            padding: 10px; backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.5);
+            z-index: 2000; text-align: center; 
+            cursor: grab; /* Draggable cursor */
+            transition: box-shadow 0.2s;
+            user-select: none;
+        }
+        
+        #petriWidget:active { cursor: grabbing; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+        
+        canvas { border-radius: 50%; background: #f0f2f6; box-shadow: inset 0 0 10px rgba(0,0,0,0.1); display: block; margin: 0 auto; pointer-events: none; }
+        
+        .petri-toolbar { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eee; }
+        .petri-score { font-weight: bold; font-size: 0.9rem; color: #333; }
+        .btn-trophy { background: none; border: none; font-size: 1.2rem; cursor: pointer; color: #FFC107; transition: transform 0.2s; }
+        .btn-trophy:hover { transform: scale(1.2); }
+
+        /* Leaderboard Modal */
+        .leaderboard-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f5f5f5; align-items: center; }
+        .rank-badge { width: 25px; height: 25px; background: #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin-right: 10px; font-size: 0.8rem; }
+        .rank-1 { background: #FFD700; color: #555; }
+        .rank-2 { background: #C0C0C0; color: white; }
+        .rank-3 { background: #CD7F32; color: white; }
+        .colony-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 8px; }
+
+        /* Inventory Grid (Standard) */
+        .inventory-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
+        .metrics-container { display: flex; gap: 1.5rem; }
+        .metric-card { background: white; padding: 1.5rem; border-radius: var(--card-radius); display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(0,0,0,0.05); min-width: 120px; }
+        .metric-value { font-size: 1.8rem; font-weight: 700; color: var(--secondary-color); }
+        .freezer-section { margin-bottom: 3rem; padding: 1rem; border-radius: 8px; border: 2px solid transparent; transition: background 0.2s; }
+        .freezer-section.drag-over { background: rgba(76, 175, 80, 0.1); border-color: #4CAF50; border-style: dashed; }
+        .freezer-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; border-bottom: 2px solid #e6e6e6; padding-bottom: 0.5rem; }
+        .box-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; }
+        .box-card { background: white; padding: 1.25rem; border-radius: var(--card-radius); text-decoration: none; color: inherit; box-shadow: 0 1px 2px rgba(0,0,0,0.05); border-left: 6px solid #333; transition: all 0.2s ease; display: flex; flex-direction: column; min-height: 100px; position: relative; overflow: hidden; }
+        .box-card:hover { transform: translateY(-3px); box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .box-location { font-size: 0.75rem; text-transform: uppercase; font-weight: 700; margin-bottom: 8px; display: flex; align-items: center; gap: 5px; }
+        .mascot-icon { position: absolute; top: 10px; right: 15px; font-size: 3rem; opacity: 0.08; color: #000; }
+
+        /* Modals (Standard) */
+        .modal { display: none; position: fixed; z-index: 2500; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 500px; }
+        input, select { width: 100%; padding: 0.7rem; margin: 0.5rem 0 1rem 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .btn-primary { background: var(--primary-color); color: white; border: none; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .btn-secondary { background: white; color: var(--text-color); border: 1px solid #ddd; padding: 0.8rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .filter-input { width: 200px; padding: 0.5rem; border: 1px solid #ddd; border-radius: 20px; padding-left: 15px; }
+        
+        .picker-grid { display: flex; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
+        .color-opt { width: 30px; height: 30px; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 0 0 1px #ddd; }
+        .color-opt.selected { box-shadow: 0 0 0 2px #333; transform: scale(1.1); }
+        .icon-opt { width: 40px; height: 40px; border-radius: 8px; cursor: pointer; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #555; }
+        .icon-opt.selected { background: var(--primary-color); color: white; border-color: var(--primary-color); }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo"><i class="fas fa-flask"></i> LIMS Lite</div>
+        <a href="/" class="sidebar-link active"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/labs" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Lab Calendars</a>
+        <a href="/projects" class="sidebar-link"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="/templates" class="sidebar-link"><i class="fas fa-file-alt"></i> Templates</a>
+        <a href="/inventory" class="sidebar-link"><i class="fas fa-boxes"></i> Inventory</a>
+        {% if user.role == 'Admin' %}
+        <a href="/admin" class="sidebar-link" style="color:#d32f2f;"><i class="fas fa-user-shield"></i> Admin Panel</a>
+        {% endif %}
+
+        <div class="search-container">
+            <form action="/search" method="get" id="searchForm">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" name="q" id="searchInput" class="search-input" placeholder="Search..." autocomplete="off">
+            </form>
+            <div id="searchResults"></div>
+        </div>
+        
+        <div style="margin-top: auto;"></div>
+        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #eee;">
+            <div style="font-weight: bold; font-size: 0.9rem; margin-bottom: 5px;">👤 {{ user.username }}</div>
+            <a href="/logout" style="color: #d32f2f; text-decoration: none; font-size: 0.85rem;">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="top-grid">
+            <div class="panel">
+                <h3><i class="far fa-calendar-alt"></i> My Week</h3>
+                <div class="agenda-list">
+                    {% for item in agenda %}
+                    <a href="{{ item.link }}" class="agenda-item">
+                        <div class="agenda-date">{{ item.date.strftime('%a') }}<br><small>{{ item.date.day }}</small></div>
+                        <div class="agenda-icon agenda-type-{{ item.type }}">
+                            <i class="fas {{ 'fa-flask' if item.type == 'experiment' else 'fa-microscope' }}"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight:600;">{{ item.title }}</div>
+                            <div style="font-size:0.85rem; color:#666;">{{ item.desc }}</div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                    {% if agenda|length == 0 %}
+                    <div style="color:#999; text-align:center; padding:20px;">Nothing scheduled for the next 7 days.</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3><i class="fas fa-tools"></i> Lab Tools</h3>
+                <textarea id="quickNotes" class="notes-area" placeholder="Quick notes... (Autosaved)" onkeyup="saveNotes()"></textarea>
+                
+                <div class="timer-box">
+                    <div id="timerDisplay" class="timer-display">00:00</div>
+                    <div class="timer-controls">
+                        <input type="number" id="timerMin" class="timer-input" placeholder="Min" value="5">
+                        <button class="btn-timer" onclick="startTimer()"><i class="fas fa-play"></i></button>
+                        <button class="btn-timer" onclick="stopTimer()"><i class="fas fa-stop"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="petriWidget">
+            <canvas id="petriCanvas" width="140" height="140"></canvas>
+            <div class="petri-toolbar">
+                <span class="petri-score">BM: {{ user.petri_score }}</span>
+                <button class="btn-trophy" onclick="document.getElementById('leaderboardModal').style.display='flex'" title="Leaderboard">🏆</button>
+            </div>
+        </div>
+
+        <div class="inventory-header">
+            <div><h1 style="margin:0; color:var(--secondary-color);">Inventory</h1><div style="color:#666; font-size:0.9rem; margin-top:5px;">Manage Freezers & Boxes</div></div>
+            <div style="display:flex; gap:10px;">
+                <div class="metrics-container">
+                    <div class="metric-card"><div class="metric-value">{{ stats.samples }}</div><span style="font-size:0.8rem; color:#888; font-weight:600; text-transform:uppercase;">Samples</span></div>
+                    <div class="metric-card"><div class="metric-value">{{ stats.boxes }}</div><span style="font-size:0.8rem; color:#888; font-weight:600; text-transform:uppercase;">Boxes</span></div>
+                    {% if stats.alerts > 0 %}<div class="metric-card" style="border-left: 4px solid #FF9800;"><div class="metric-value" style="color: #F57C00;">{{ stats.alerts }}</div><span style="font-size:0.8rem; color:#888; font-weight:600; text-transform:uppercase;">Low Stock</span></div>{% endif %}
+                </div>
+                <div style="border-left:1px solid #ddd; margin:0 15px;"></div>
+                <button class="btn-primary" onclick="openModal('newBoxModal')">+ Box</button>
+                <button class="btn-secondary" onclick="openModal('newFreezerModal')">+ Freezer</button>
+            </div>
+        </div>
+        
+        <input type="text" id="boxFilter" class="filter-input" placeholder="Filter boxes..." onkeyup="filterBoxes()" style="margin-bottom:20px;">
+
+        {% if freezers|length == 0 %}<div style="text-align:center; padding:4rem; color:#888; border:2px dashed #ddd; border-radius:8px;"><i class="fas fa-snowflake" style="font-size:3rem; margin-bottom:1rem; opacity:0.3;"></i><br>No freezers found. Create one to get started.</div>{% endif %}
+
+        {% for freezer in freezers %}
+        <div class="freezer-section" data-freezer-id="{{ freezer.id }}" ondragover="allowDrop(event)" ondrop="dropBox(event)">
+            <div class="freezer-header"><i class="fas fa-snowflake" style="color:#666;"></i><span style="font-size:1.4rem; font-weight:700; color:var(--secondary-color);">{{ freezer.name }}</span><span style="color:#888; margin-left:10px; font-size:0.9rem;"><i class="fas fa-map-marker-alt"></i> {{ freezer.location }}</span></div>
+            <div class="box-grid">
+                {% for box in freezer.boxes %}
+                <a href="/box/{{ box.id }}" class="box-card" draggable="true" data-box-id="{{ box.id }}" data-name="{{ box.name|lower }}" ondragstart="dragBox(event)" style="border-left-color: {{ box.color }};">
+                    <i class="mascot-icon fas {{ box.icon }}"></i>
+                    <div class="box-location" style="color: {{ box.color }};"><i class="fas fa-layer-group"></i> {{ box.shelf }}</div>
+                    <div style="font-weight:700; font-size:1.1rem; color:#333; z-index:1;">{{ box.name }}</div>
+                    <div style="font-size:0.85rem; color:#666; margin-top:auto; padding-top:10px; border-top:1px solid #f5f5f5; display:flex; justify-content:space-between;"><span>{{ box.rows }} x {{ box.cols }}</span>{% if box.label_text %}<span style="background:#eee; padding:0 5px; border-radius:3px; font-size:0.75rem;">{{ box.label_text }}</span>{% endif %}</div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div id="bot-container" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+        <button onclick="toggleBot()" style="width: 60px; height: 60px; border-radius: 30px; background: #ff4b4b; color: white; border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); font-size: 24px;">
+            <i class="fas fa-robot"></i>
+        </button>
+        <div id="bot-window" style="display: none; width: 350px; height: 450px; background: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); position: absolute; bottom: 80px; right: 0; flex-direction: column; overflow: hidden; border: 1px solid #ddd;">
+            <div style="background: #262730; color: white; padding: 15px; font-weight: bold;">LIMS AI Assistant</div>
+            <div id="bot-messages" style="flex: 1; padding: 15px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; background: #f0f2f6;"></div>
+            <div style="padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px;">
+                <input type="text" id="bot-input" placeholder="Find sample X..." style="flex: 1; padding: 8px; border: 1px solid #ddd; border-radius: 4px;">
+                <button onclick="sendToBot()" style="background: #ff4b4b; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer;">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function toggleBot() {
+        const win = document.getElementById('bot-window');
+        win.style.display = win.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    async function sendToBot(overrideText = null) {
+        const input = document.getElementById('bot-input');
+        const msgDiv = document.getElementById('bot-messages');
+        const text = overrideText || input.value;
+        if (!text) return;
+
+        // Show user text
+        msgDiv.innerHTML += `<div style="align-self: flex-end; background: #ff4b4b; color: white; padding: 8px 12px; border-radius: 15px 15px 2px 15px; max-width: 80%; margin-bottom: 5px;">${text}</div>`;
+        if (!overrideText) input.value = '';
+
+        const response = await fetch('/api/chatbot', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({text: text})
+        });
+        const data = await response.json();
+
+        // Show bot reply
+        msgDiv.innerHTML += `<div style="align-self: flex-start; background: white; color: #333; padding: 8px 12px; border-radius: 15px 15px 15px 2px; max-width: 80%; border: 1px solid #ddd; margin-bottom: 5px;">${data.reply}</div>`;
+
+        // Render Buttons if 'options' are sent
+        if (data.options) {
+            let btnContainer = `<div style="display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px;">`;
+            data.options.forEach(opt => {
+                btnContainer += `<button onclick="sendToBot('${opt.value}')" style="background:#eee; border:1px solid #ccc; padding:5px 10px; border-radius:5px; cursor:pointer; font-size:0.85rem;">${opt.label}</button>`;
+            });
+            btnContainer += `</div>`;
+            msgDiv.innerHTML += btnContainer;
+        }
+        
+        msgDiv.scrollTop = msgDiv.scrollHeight;
+    }
+    </script>
+
+    <div id="leaderboardModal" class="modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-trophy"></i> Lab Leaderboard</h3>
+            <p style="color:#666; font-size:0.9rem; margin-bottom:15px;">Most active users this week.</p>
+            {% for u in leaderboard %}
+            <div class="leaderboard-item">
+                <div style="display:flex; align-items:center;">
+                    <div class="rank-badge rank-{{ loop.index }}">{{ loop.index }}</div>
+                    <span class="colony-dot" style="background:{{ u.petri_color }}"></span>
+                    {{ u.username }}
+                </div>
+                <div style="font-weight:bold;">{{ u.petri_score }}</div>
+            </div>
+            {% endfor %}
+            <button class="btn-secondary" style="width:100%; margin-top:20px;" onclick="document.getElementById('leaderboardModal').style.display='none'">Close</button>
+        </div>
+    </div>
+
+    <div id="newFreezerModal" class="modal"><div class="modal-content"><h3>Add New Freezer</h3><form action="/freezer/create" method="post"><label>Name</label><input type="text" name="name" placeholder="e.g. -80 Deep Freeze" required><label>Location</label><input type="text" name="location" placeholder="e.g. Room 404" required><div style="display:flex; gap:10px; margin-top:15px;"><button type="submit" class="btn-primary" style="width:100%;">Create</button><button type="button" class="btn-secondary" style="width:100%;" onclick="closeModal('newFreezerModal')">Cancel</button></div></form></div></div>
+    <div id="newBoxModal" class="modal"><div class="modal-content" style="width: 500px;"><h3>Add New Box</h3><form action="/box/create" method="post"><label>Freezer</label><select name="freezer_id" required>{% for f in freezers %}<option value="{{ f.id }}">{{ f.name }}</option>{% endfor %}</select><div style="display:grid; grid-template-columns: 1fr 1fr; gap:15px;"><div><label>Name</label><input type="text" name="name" placeholder="Box Name" required></div><div><label>Shelf</label><input type="text" name="shelf" placeholder="e.g. Rack B" required></div></div><label>Sticker Text (Optional)</label><input type="text" name="label_text" placeholder="Short identifier..."><label>Box Color</label><div class="picker-grid"><div class="color-opt selected" style="background:#333;" onclick="selColor(this, '#333')"></div><div class="color-opt" style="background:#d32f2f;" onclick="selColor(this, '#d32f2f')"></div><div class="color-opt" style="background:#1976D2;" onclick="selColor(this, '#1976D2')"></div><div class="color-opt" style="background:#388E3C;" onclick="selColor(this, '#388E3C')"></div><div class="color-opt" style="background:#FBC02D;" onclick="selColor(this, '#FBC02D')"></div><div class="color-opt" style="background:#7B1FA2;" onclick="selColor(this, '#7B1FA2')"></div></div><input type="hidden" name="color" id="selectedColor" value="#333333"><label>Mascot</label><div class="picker-grid"><div class="icon-opt selected" onclick="selIcon(this, 'fa-box')"><i class="fas fa-box"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-frog')"><i class="fas fa-frog"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-crow')"><i class="fas fa-crow"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-fish')"><i class="fas fa-fish"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-bacterium')"><i class="fas fa-bacterium"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-dna')"><i class="fas fa-dna"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-snowflake')"><i class="fas fa-snowflake"></i></div><div class="icon-opt" onclick="selIcon(this, 'fa-cat')"><i class="fas fa-cat"></i></div></div><input type="hidden" name="icon" id="selectedIcon" value="fa-box"><div style="display:flex; gap:10px; margin-top:15px;"><div><label>Rows</label><input type="number" name="rows" value="9" min="1" max="20" required></div><div><label>Cols</label><input type="number" name="cols" value="9" min="1" max="20" required></div></div><div style="display:flex; gap:10px; margin-top:20px;"><button type="submit" class="btn-primary" style="width:100%;">Create</button><button type="button" class="btn-secondary" style="width:100%;" onclick="closeModal('newBoxModal')">Cancel</button></div></form></div></div>
+
+    <script>
+        // === DRAGGABLE WIDGET LOGIC ===
+        const petriWidget = document.getElementById("petriWidget");
+        let isDragging = false;
+        let startX, startY, initialLeft, initialTop;
+
+        petriWidget.addEventListener("mousedown", (e) => {
+            // Check if clicking button or text
+            if(e.target.tagName === 'BUTTON') return;
+            
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            initialLeft = petriWidget.offsetLeft;
+            initialTop = petriWidget.offsetTop;
+            petriWidget.style.cursor = "grabbing";
+        });
+
+        document.addEventListener("mousemove", (e) => {
+            if (isDragging) {
+                e.preventDefault();
+                const dx = e.clientX - startX;
+                const dy = e.clientY - startY;
+                petriWidget.style.left = `${initialLeft + dx}px`;
+                petriWidget.style.top = `${initialTop + dy}px`;
+                petriWidget.style.bottom = 'auto'; 
+                petriWidget.style.right = 'auto';
+            }
+        });
+
+        document.addEventListener("mouseup", () => {
+            isDragging = false;
+            if(petriWidget) petriWidget.style.cursor = "grab";
+        });
+
+        // === PETRI DISH ANIMATION (FIXED SIZE, WOBBLE, MULTI-COLOR) ===
+        const SCORE = {{ user.petri_score }};
+        const PALETTE = ["#FF5252", "#448AFF", "#69F0AE", "#E040FB", "#FFAB40", "#FFFF00", "#00E5FF", "#FF4081"];
+        
+        const canvas = document.getElementById('petriCanvas');
+        const ctx = canvas.getContext('2d');
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        
+        let colonies = [];
+
+        function initPetri() {
+            let numColonies = Math.ceil(SCORE / 10);
+            if (numColonies < 1) numColonies = 1;
+            if (numColonies > 25) numColonies = 25; 
+
+            colonies = [];
+            for(let i=0; i<numColonies; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const r = Math.random() * 35; // Spread
+                
+                const rawSize = 5 + (Math.random() * (SCORE / numColonies));
+                const size = rawSize > 25 ? 25 : rawSize;
+                
+                const color = PALETTE[i % PALETTE.length];
+                
+                colonies.push({
+                    baseX: centerX + Math.cos(angle)*r, 
+                    baseY: centerY + Math.sin(angle)*r, 
+                    targetR: size,
+                    wobblePhase: Math.random() * Math.PI * 2,
+                    wobbleSpeed: 0.002 + Math.random() * 0.003, // SLOW
+                    wobbleRange: 2 + Math.random() * 3, 
+                    pulsePhase: Math.random() * Math.PI * 2,
+                    pulseSpeed: 0.005 + Math.random() * 0.005, // SLOW PULSE
+                    color: color
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            
+            // Draw Agar
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 65, 0, Math.PI*2);
+            ctx.fillStyle = "#fff8e1"; 
+            ctx.fill();
+            ctx.strokeStyle = "rgba(0,0,0,0.05)";
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            colonies.forEach(c => {
+                c.wobblePhase += c.wobbleSpeed;
+                c.pulsePhase += c.pulseSpeed;
+
+                // Apply Wobble (Anchored)
+                const x = c.baseX + Math.cos(c.wobblePhase) * c.wobbleRange;
+                const y = c.baseY + Math.sin(c.wobblePhase * 1.3) * c.wobbleRange;
+
+                const currentR = c.targetR + Math.sin(c.pulsePhase) * 1.5;
+
+                // Membrane
+                ctx.beginPath();
+                ctx.arc(x, y, currentR, 0, Math.PI*2);
+                ctx.fillStyle = c.color;
+                ctx.globalAlpha = 0.4;
+                ctx.fill();
+                
+                // Nucleus
+                ctx.beginPath();
+                ctx.arc(x - currentR*0.2, y - currentR*0.2, currentR*0.4, 0, Math.PI*2);
+                ctx.fillStyle = c.color;
+                ctx.globalAlpha = 0.8;
+                ctx.fill();
+                
+                // Shine
+                ctx.beginPath();
+                ctx.arc(x - currentR*0.3, y - currentR*0.3, currentR*0.15, 0, Math.PI*2);
+                ctx.fillStyle = "rgba(255,255,255,0.6)";
+                ctx.fill();
+            });
+            ctx.globalAlpha = 1.0;
+            requestAnimationFrame(animate);
+        }
+        
+        initPetri();
+        requestAnimationFrame(animate);
+
+        // === NOTES & TIMER (Standard) ===
+        const notesArea = document.getElementById('quickNotes');
+        notesArea.value = localStorage.getItem('lims_notes') || '';
+        function saveNotes() { localStorage.setItem('lims_notes', notesArea.value); }
+
+        let timerInterval; let timeLeft = 0; const display = document.getElementById('timerDisplay');
+        function startTimer() { if (timerInterval) clearInterval(timerInterval); if (Notification.permission !== "granted") Notification.requestPermission(); const mins = parseInt(document.getElementById('timerMin').value); timeLeft = mins * 60; updateDisplay(); timerInterval = setInterval(() => { timeLeft--; updateDisplay(); if (timeLeft <= 0) { clearInterval(timerInterval); new Notification("LIMS Lite", { body: "Timer Finished!" }); alert("Timer Finished!"); } }, 1000); }
+        function stopTimer() { clearInterval(timerInterval); timeLeft = 0; updateDisplay(); }
+        function updateDisplay() { const m = Math.floor(timeLeft / 60).toString().padStart(2, '0'); const s = (timeLeft % 60).toString().padStart(2, '0'); display.innerText = `${m}:${s}`; }
+
+        // === GRID / MODAL LOGIC ===
+        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.style.display = 'none'; }
+        function selColor(el, hex) { document.querySelectorAll('.color-opt').forEach(d => d.classList.remove('selected')); el.classList.add('selected'); document.getElementById('selectedColor').value = hex; }
+        function selIcon(el, cls) { document.querySelectorAll('.icon-opt').forEach(d => d.classList.remove('selected')); el.classList.add('selected'); document.getElementById('selectedIcon').value = cls; }
+        function filterBoxes() { const q = document.getElementById('boxFilter').value.toLowerCase(); document.querySelectorAll('.box-card').forEach(box => { box.style.display = box.getAttribute('data-name').includes(q) ? "flex" : "none"; }); }
+        
+        // Drag Box
+        function dragBox(e) { e.dataTransfer.setData("box_id", e.currentTarget.getAttribute("data-box-id")); e.currentTarget.classList.add("dragging"); }
+        function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add("drag-over"); }
+        document.querySelectorAll('.freezer-section').forEach(el=>{el.addEventListener('dragleave',e=>{if(e.target===e.currentTarget)e.currentTarget.classList.remove("drag-over")})});
+        function dropBox(e) { e.preventDefault(); const s=e.target.closest('.freezer-section'); if(!s)return; s.classList.remove("drag-over"); const bid=e.dataTransfer.getData("box_id"); const fid=s.getAttribute("data-freezer-id"); if(bid && fid) { fetch('/api/box/move', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({box_id:parseInt(bid), new_freezer_id:parseInt(fid)}) }).then(r => r.json()).then(d => { if(d.status==='success') location.reload(); }); } }
+        
+        // Search
+        const searchInput = document.getElementById('searchInput'); const resultsBox = document.getElementById('searchResults'); let searchTimer;
+        searchInput.addEventListener('input', e => { const q = e.target.value; clearTimeout(searchTimer); if(q.length < 2) { resultsBox.style.display='none'; return; } searchTimer = setTimeout(() => { fetch(`/api/search_autocomplete?q=${q}`).then(r => r.json()).then(d => { if(d.length > 0) { let html = ''; d.forEach(i => { html += `<a href="${i.url}" class="search-item"><div class="search-tag" style="background:${i.color}">${i.category}</div><div style="flex:1;"><div style="font-weight:600;">${i.name}</div><div style="font-size:0.8rem; color:#888;">${i.info}</div></div><i class="fas ${i.icon}" style="color:#ccc;"></i></a>`; }); html += `<div onclick="document.getElementById('searchForm').submit()" style="padding:10px; text-align:center; font-size:0.8rem; color:#666; cursor:pointer; background:#f5f5f5;">View All Results</div>`; resultsBox.innerHTML = html; resultsBox.style.display='block'; } else { resultsBox.style.display='none'; } }); }, 300); });
+        document.addEventListener('click', function(e) { if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) { resultsBox.style.display = 'none'; } });
+    </script>
+
+    <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<button onclick="startScanner()" class="btn-primary"><i class="fas fa-qrcode"></i> Scan</button>
+
+<div id="scannerModal" class="modal">
+    <div class="modal-content">
+        <h3>Scan QR Code</h3>
+        <div id="reader" style="width: 100%"></div>
+        <button onclick="stopScanner()">Close</button>
+    </div>
+</div>
+
+<script>
+    let html5QrcodeScanner;
+
+    function startScanner() {
+        document.getElementById('scannerModal').style.display = 'flex';
+        html5QrcodeScanner = new Html5QrcodeScanner("reader", { fps: 10, qrbox: 250 });
+        html5QrcodeScanner.render(onScanSuccess);
+    }
+
+    function onScanSuccess(decodedText, decodedResult) {
+        // Redirect browser to the scanned URL
+        window.location.href = decodedText;
+        stopScanner();
+    }
+
+    function stopScanner() {
+        if(html5QrcodeScanner) html5QrcodeScanner.clear();
+        document.getElementById('scannerModal').style.display = 'none';
+    }
+</script>
+</body>
+</html>

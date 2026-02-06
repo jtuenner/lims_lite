@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ box.name }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #f0f2f6; --sidebar-bg: #ffffff; --text-color: #31333F; --primary-color: #ff4b4b; --secondary-color: #262730; }
+        body { font-family: "Source Sans Pro", sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; display: flex; height: 100vh; }
+        .sidebar { width: 300px; background: var(--sidebar-bg); padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; flex-shrink: 0; z-index: 10; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 2rem; }
+        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: #333; text-decoration: none; border-radius: 6px; margin-bottom: 8px; font-weight: 600; transition: background 0.2s; }
+        .sidebar-link:hover { background: #f0f0f0; } .sidebar-link.active { background: #ffebeb; color: var(--primary-color); } .sidebar-link i { width: 20px; text-align: center; }
+        .context-box { margin-top: 20px; padding: 15px; background: #f9f9f9; border-radius: 6px; border: 1px solid #eee; }
+        .main-content { flex: 1; padding: 3rem; overflow-y: auto; display: flex; gap: 30px; }
+        .tray-area { flex: 1; }
+        .settings-panel { width: 320px; background: white; border-radius: 8px; border: 1px solid #ddd; padding: 20px; height: fit-content; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        .box-container { display: inline-block; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #ddd; }
+        .grid-wrapper { display: grid; grid-template-columns: 30px repeat({{ box.cols }}, 50px); grid-template-rows: 30px repeat({{ box.rows }}, 50px); gap: 5px; align-items: center; justify-items: center; }
+        .header-cell { font-weight: bold; color: #888; font-size: 0.9rem; }
+        .slot-wrapper { width: 50px; height: 50px; background: #f0f2f6; border-radius: 4px; display: flex; align-items: center; justify-content: center; border: 1px solid #e0e0e0; transition: all 0.2s; }
+        .slot-wrapper.drag-over { background: #ffebeb; border: 2px dashed var(--primary-color); }
+        .tube { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; color: #ccc; border: 2px dashed #ccc; cursor: pointer; user-select: none; overflow: hidden; text-align: center; line-height: 1; padding: 2px; }
+        .tube:hover { border-color: #999; color: #999; }
+        .tube.occupied { background: var(--primary-color); color: white; border: 2px solid #d32f2f; box-shadow: inset 0 2px 5px rgba(255,255,255,0.3), 0 2px 4px rgba(0,0,0,0.2); }
+        .tube.occupied:hover { transform: scale(1.1); z-index: 10; }
+        .tube.dragging { opacity: 0.5; }
+        .tube.low-stock { border-color: #ff9800; background: #ff9800; }
+        h2 { margin-top: 0; font-size: 1.2rem; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+        label { font-size: 0.85rem; font-weight: 600; color: #555; display: block; margin-top: 10px; }
+        input, select { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .btn-panel { width: 100%; padding: 10px; margin-top: 15px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; font-size: 0.9rem; }
+        .btn-save { background: var(--secondary-color); color: white; }
+        .btn-print { background: white; border: 2px solid var(--secondary-color); color: var(--secondary-color); display: flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; }
+        .btn-print:hover { background: #f0f0f0; }
+        .btn-delete { background: white; border: 1px solid red; color: red; margin-top: 10px; }
+        .picker-grid { display: flex; gap: 8px; margin-top: 5px; flex-wrap: wrap; }
+        .color-opt { width: 25px; height: 25px; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 0 0 1px #ddd; transition: transform 0.1s; }
+        .color-opt.selected { box-shadow: 0 0 0 2px #333; transform: scale(1.1); }
+        .icon-opt { width: 35px; height: 35px; border-radius: 6px; cursor: pointer; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; color: #555; }
+        .icon-opt.selected { background: var(--secondary-color); color: white; border-color: var(--secondary-color); }
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 500px; max-height: 90vh; overflow-y: auto; }
+        .btn-primary { padding: 10px 20px; background: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; width: 100%; }
+        .search-results { border: 1px solid #ddd; max-height: 100px; overflow-y: auto; display: none; margin-top: -15px; margin-bottom: 15px; background: white; position: relative; z-index: 2000; border-radius: 0 0 4px 4px; }
+        .search-item { padding: 8px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; }
+        .search-item:hover { background: #f0f0f0; }
+        .lineage-tag { background: #e3f2fd; color: #1565c0; padding: 3px 8px; border-radius: 10px; font-size: 0.8rem; margin-right: 5px; display: inline-block; margin-bottom: 5px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><i class="fas fa-flask"></i> LIMS Lite</div>
+        <a href="/" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/labs" class="sidebar-link"><i class="fas fa-calendar-alt"></i> Lab Calendars</a>
+        <a href="/projects" class="sidebar-link"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="/templates" class="sidebar-link"><i class="fas fa-file-alt"></i> Templates</a>
+        <a href="/inventory" class="sidebar-link"><i class="fas fa-boxes"></i> Inventory</a>
+        <a href="/orders" class="sidebar-link"><i class="fas fa-shopping-cart"></i> Orders</a>
+        
+        {% if user.role == 'Admin' %}
+        <a href="/admin" class="sidebar-link" style="color:#d32f2f;"><i class="fas fa-user-shield"></i> Admin Panel</a>
+        {% endif %}
+        
+        <div class="context-box">
+            <div style="font-size:0.75rem; color:#888; text-transform:uppercase; margin-bottom:5px;">LOCATION</div>
+            <div style="font-weight:bold;">{{ box.freezer.name }}</div>
+            <div style="font-size:0.9rem;">{{ box.name }}</div>
+            <a href="/" style="display:block; margin-top:10px; font-size:0.85rem; text-decoration:none; color:#d32f2f;">&larr; Back to Dashboard</a>
+        </div>
+        
+        <div style="margin-top:auto; padding-top:15px; border-top:1px solid #eee;">
+            <div style="font-weight:bold; font-size:0.9rem;">👤 {{ user.username }}</div>
+            <a href="/logout" style="color:#d32f2f; text-decoration:none; font-size:0.85rem;">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="tray-area">
+            <h1 style="margin-top:0;">{{ box.name }}</h1>
+            <div class="box-container">
+                <div class="grid-wrapper">
+                    <div></div> {% for c in range(1, box.cols + 1) %}<div class="header-cell">{{ c }}</div>{% endfor %}
+                    {% set alpha = "ABCDEFGHIJKLMNOPQRSTUVWXYZ" %}
+                    {% for r in range(1, box.rows + 1) %}
+                        <div class="header-cell">{{ alpha[r-1] }}</div>
+                        {% for c in range(1, box.cols + 1) %}
+                            {% set item = grid_map.get((r, c)) %}
+                            <div class="slot-wrapper" ondragover="allowDrop(event)" ondrop="dropSample(event, {{ r }}, {{ c }})">
+                                {% if item %}
+                                    <div class="tube occupied {{ 'low-stock' if item.is_low_stock else '' }}" 
+                                         draggable="true" 
+                                         ondragstart="dragSample(event, {{ item.id }})" 
+                                         onclick="openModal(
+                                            '{{ item.id }}', 
+                                            '{{ item.name }}', 
+                                            '{{ item.sample_type }}', 
+                                            '{{ item.lot_number or '' }}', 
+                                            `{{ item.notes or '' }}`, 
+                                            '{{ item.amount_left or '' }}', 
+                                            '{{ item.expiry_date or '' }}', 
+                                            '{{ item.host_species or '' }}', 
+                                            '{{ item.resistance or '' }}', 
+                                            '{{ item.passage_number or '' }}', 
+                                            '{{ item.is_low_stock }}', 
+                                            '{{ item.experiment_id or 0 }}', 
+                                            [{% for p in item.parents %}{id:{{p.id}}, name:'{{p.name}}'}{% if not loop.last %},{% endif %}{% endfor %}], 
+                                            [{% for child in item.children %}'{{child.name}}'{% if not loop.last %},{% endif %}{% endfor %}]
+                                         )">
+                                        {{ item.name[:3] }}
+                                    </div>
+                                {% else %}
+                                    <div class="tube" onclick="openAddModal({{ r }}, {{ c }})">+</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <h2>Box Settings</h2>
+            <form action="/box/update" method="post">
+                <input type="hidden" name="box_id" value="{{ box.id }}">
+                <label>Box Name</label><input type="text" name="name" value="{{ box.name }}" required>
+                <label>Shelf / Rack</label><input type="text" name="shelf" value="{{ box.shelf }}" required>
+                <label>Label Text</label><input type="text" name="label_text" value="{{ box.label_text or '' }}">
+                <label>Color Identifier</label><div class="picker-grid">{% for c in ['#333333', '#d32f2f', '#1976D2', '#388E3C', '#FBC02D', '#7B1FA2'] %}<div class="color-opt {{ 'selected' if box.color == c else '' }}" style="background:{{ c }};" onclick="selColor(this, '{{ c }}')"></div>{% endfor %}</div><input type="hidden" name="color" id="selectedColor" value="{{ box.color }}"><label>Mascot</label><div class="picker-grid">{% for i in ['fa-box', 'fa-frog', 'fa-crow', 'fa-fish', 'fa-bacterium', 'fa-dna', 'fa-snowflake', 'fa-cat'] %}<div class="icon-opt {{ 'selected' if box.icon == i else '' }}" onclick="selIcon(this, '{{ i }}')"><i class="fas {{ i }}"></i></div>{% endfor %}</div><input type="hidden" name="icon" id="selectedIcon" value="{{ box.icon }}"><button type="submit" class="btn-panel btn-save">Save Changes</button>
+            </form>
+            
+            <hr style="margin: 20px 0; border:0; border-top:1px solid #eee;">
+            
+            <a href="/box/{{ box.id }}/label" target="_blank" class="btn-panel btn-print">
+                <i class="fas fa-qrcode"></i> Print Box Label
+            </a>
+            
+            <a href="/box/{{ box.id }}/print_samples" target="_blank" class="btn-panel btn-print" style="margin-top:10px;">
+                <i class="fas fa-tags"></i> Print All Samples
+            </a>
+            
+            <button onclick="document.getElementById('importModal').style.display='flex'" class="btn-panel btn-print" style="margin-top:10px; color:#2196F3; border-color:#2196F3;"><i class="fas fa-file-upload"></i> Import CSV</button>
+
+            <form action="/box/delete" method="post" onsubmit="return confirm('Delete this box and ALL samples inside?');">
+                <input type="hidden" name="box_id" value="{{ box.id }}">
+                <button class="btn-panel btn-delete">Delete Box</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="importModal" class="modal">
+        <div class="modal-content">
+            <h3>Import Samples from CSV</h3>
+            <p style="font-size:0.9rem; color:#666; line-height:1.5;">
+                Upload a CSV file to bulk create samples. The system will fill empty slots automatically unless you specify Row/Col.
+            </p>
+            <div style="background:#f9f9f9; padding:10px; border-radius:4px; font-family:monospace; font-size:0.8rem; margin-bottom:15px; border:1px solid #eee;">
+                Required Header: <b>Name</b><br>
+                Optional Headers: Type, Notes, Lot, Row, Col
+            </div>
+            
+            <form action="/box/{{ box.id }}/import_csv" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" accept=".csv" required style="border:1px solid #ddd; padding:10px; width:100%; box-sizing:border-box;">
+                
+                <button type="submit" class="btn-primary" style="margin-top:15px; width:100%;">Upload & Import</button>
+                <button type="button" onclick="document.getElementById('importModal').style.display='none'" style="width:100%; margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <h3>Add Sample (Row <span id="spanRow"></span>, Col <span id="spanCol"></span>)</h3>
+            <form action="/box/{{ box.id }}/add_sample" method="post">
+                <input type="hidden" name="row" id="inpRow">
+                <input type="hidden" name="col" id="inpCol">
+                
+                <label>Name</label>
+                <input type="text" name="name" required autofocus>
+                
+                <label>Derived From (Parents)</label>
+                <div id="parentTags" style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:5px;"></div>
+                
+                <input type="text" id="parentSearch" placeholder="Search parents (e.g. Plasmid X)..." onkeyup="searchParent(this.value)" autocomplete="off">
+                <input type="hidden" name="parent_ids" id="inpParentIds">
+                <div class="search-results" id="parentResults"></div>
+                
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                    <div><label>Type</label><select name="sample_type"><option>Plasmid</option><option>Cell Line</option><option>Antibody</option><option>Chemical</option><option>Primer</option><option>Other</option></select></div>
+                    <div><label>Lot #</label><input type="text" name="lot"></div>
+                </div>
+                
+                <label>Experiment (Optional)</label>
+                <select name="experiment_id"><option value="0">-- None --</option>{% for exp in experiments %}<option value="{{ exp.id }}">{{ exp.project.name }} > {{ exp.name }}</option>{% endfor %}</select>
+                
+                <button type="submit" class="btn-primary">Add Sample</button>
+                <button type="button" onclick="closeModals()" style="width:100%; margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <h3>Sample Details</h3>
+            <form action="/sample/update" method="post">
+                <input type="hidden" name="sample_id" id="editId">
+                <label>Name</label><input type="text" name="name" id="editName">
+                
+                <label>Derived From (Parents)</label>
+                <div id="editParentTags" style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:5px;"></div>
+                
+                <input type="text" id="editParentSearch" placeholder="Search to add parent..." onkeyup="searchParentEdit(this.value)" autocomplete="off">
+                <input type="hidden" name="parent_ids" id="editParentIds">
+                <div class="search-results" id="editParentResults"></div>
+                <div id="childrenDisplay" style="margin-top:10px; padding:10px; background:#f9f9f9; border-radius:4px;"></div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                    <div><label>Type</label><select name="sample_type" id="editType"><option>Plasmid</option><option>Cell Line</option><option>Antibody</option><option>Chemical</option><option>Primer</option><option>Other</option></select></div>
+                    <div><label>Lot #</label><input type="text" name="lot" id="editLot"></div>
+                </div>
+                <label>Experiment</label>
+                <select name="experiment_id" id="editExp"><option value="0">-- None --</option>{% for exp in experiments %}<option value="{{ exp.id }}">{{ exp.project.name }} > {{ exp.name }}</option>{% endfor %}</select>
+                <label>Notes</label><textarea name="notes" id="editNotes"></textarea>
+                <label><input type="checkbox" name="is_low_stock" id="editLowStock" style="width:auto;"> Low Stock Alert</label>
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </form>
+            
+            <div style="display:flex; justify-content:space-between; margin-top:20px; padding-top:10px; border-top:1px solid #eee;">
+                <a href="#" id="btnPrintLabel" target="_blank" class="btn-print" style="border:none; background:#333; color:white;"><i class="fas fa-qrcode"></i> Print Label</a>
+                <form action="/sample/delete" method="post" onsubmit="return confirm('Delete sample?');" style="margin:0;">
+                    <input type="hidden" name="sample_id" id="delId">
+                    <button class="btn-delete" style="width:auto; padding:10px 20px; border:1px solid red; margin:0;">Delete</button>
+                </form>
+            </div>
+            
+            <a href="#" id="btnLineage" target="_blank" class="btn-primary" style="background:#673AB7; text-decoration:none; display:block; text-align:center; margin-top:10px;">
+                <i class="fas fa-sitemap"></i> View Family Tree
+            </a>
+
+            <button onclick="closeModals()" style="width:100%; margin-top:10px; background:none; border:none; color:#666; cursor:pointer;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        function dragSample(e, sampleId) { e.dataTransfer.setData("sample_id", sampleId); e.currentTarget.classList.add("dragging"); }
+        function allowDrop(e) { e.preventDefault(); e.currentTarget.classList.add("drag-over"); }
+        document.querySelectorAll('.slot-wrapper').forEach(slot => { slot.addEventListener('dragleave', e => e.currentTarget.classList.remove("drag-over")); });
+        function dropSample(e, newRow, newCol) { e.preventDefault(); e.currentTarget.classList.remove("drag-over"); const sampleId = e.dataTransfer.getData("sample_id"); if (sampleId) { fetch('/api/sample/move', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ sample_id: parseInt(sampleId), new_row: newRow, new_col: newCol }) }).then(r => r.json()).then(d => { if(d.status === 'success') location.reload(); else alert("Slot occupied or error moving sample."); }); } }
+        
+        // --- ADD MODE ---
+        let selectedParents = [];
+        
+        function openAddModal(r, c) { 
+            document.getElementById('spanRow').innerText = r; 
+            document.getElementById('spanCol').innerText = c; 
+            document.getElementById('inpRow').value = r; 
+            document.getElementById('inpCol').value = c; 
+            clearParents(); // Reset Add Form
+            document.getElementById('addModal').style.display = 'flex'; 
+        }
+
+        function searchParent(q) {
+            const resBox = document.getElementById('parentResults');
+            if(q.length < 2) { resBox.style.display='none'; return; }
+            fetch(`/api/search_autocomplete?q=${q}`).then(r => r.json()).then(d => {
+                const samples = d.filter(item => item.category === 'Sample');
+                if(samples.length > 0) {
+                    let html = '';
+                    samples.forEach(i => {
+                        html += `<div class="search-item" onclick="addParent(${i.id}, '${i.name}')"><b>${i.name}</b> <span style="color:#888;">${i.info}</span></div>`;
+                    });
+                    resBox.innerHTML = html; resBox.style.display = 'block';
+                } else { resBox.style.display = 'none'; }
+            });
+        }
+        function addParent(id, name) {
+            if(selectedParents.find(p => p.id === id)) return;
+            selectedParents.push({id, name});
+            renderParents();
+            document.getElementById('parentSearch').value = '';
+            document.getElementById('parentResults').style.display = 'none';
+        }
+        function removeParent(id) { selectedParents = selectedParents.filter(p => p.id !== id); renderParents(); }
+        function renderParents() {
+            const container = document.getElementById('parentTags');
+            const hiddenInput = document.getElementById('inpParentIds');
+            container.innerHTML = '';
+            selectedParents.forEach(p => {
+                container.innerHTML += `<span class="lineage-tag" style="background:#e3f2fd; color:#1565c0; padding:4px 8px; border-radius:15px; font-size:0.85rem; display:flex; align-items:center; gap:5px;"><i class="fas fa-link"></i> ${p.name} <i class="fas fa-times" style="cursor:pointer;" onclick="removeParent(${p.id})"></i></span>`;
+            });
+            hiddenInput.value = selectedParents.map(p => p.id).join(',');
+        }
+        function clearParents() { selectedParents = []; renderParents(); }
+
+        // --- EDIT MODE ---
+        let editSelectedParents = [];
+
+        function openModal(id, name, type, lot, notes, amt, expDate, host, res, pass, low, expId, parentArray, childrenArray) { 
+            document.getElementById('editId').value = id; 
+            document.getElementById('delId').value = id; 
+            document.getElementById('btnPrintLabel').href = `/sample/${id}/label`; 
+            document.getElementById('btnLineage').href = `/sample/${id}/lineage`;
+
+            document.getElementById('editName').value = name; 
+            document.getElementById('editType').value = type; 
+            document.getElementById('editLot').value = lot; 
+            document.getElementById('editNotes').value = notes; 
+            document.getElementById('editExp').value = expId; 
+            document.getElementById('editLowStock').checked = (low === 'True'); 
+
+            // Initialize Edit Parents from data passed in onclick
+            editSelectedParents = parentArray || [];
+            renderEditParents();
+
+            // Show Children Info
+            const cDiv = document.getElementById('childrenDisplay'); 
+            if(childrenArray && childrenArray.length > 0) { 
+                let html = `<small style="color:#888;">DERIVED CHILDREN:</small><br>`; 
+                childrenArray.forEach(c => html += `<span class="lineage-tag"><i class="fas fa-level-down-alt"></i> ${c}</span>`); 
+                cDiv.innerHTML = html; 
+            } else cDiv.innerHTML = ''; 
+
+            document.getElementById('viewModal').style.display = 'flex'; 
+        }
+
+        function searchParentEdit(q) {
+            const resBox = document.getElementById('editParentResults');
+            if(q.length < 2) { resBox.style.display='none'; return; }
+            fetch(`/api/search_autocomplete?q=${q}`).then(r => r.json()).then(d => {
+                const samples = d.filter(item => item.category === 'Sample');
+                if(samples.length > 0) {
+                    let html = '';
+                    samples.forEach(i => {
+                        // Prevent self-selection
+                        if(i.id != document.getElementById('editId').value) {
+                            html += `<div class="search-item" onclick="addEditParent(${i.id}, '${i.name}')"><b>${i.name}</b> <span style="color:#888;">${i.info}</span></div>`;
+                        }
+                    });
+                    resBox.innerHTML = html; resBox.style.display = 'block';
+                } else { resBox.style.display = 'none'; }
+            });
+        }
+        function addEditParent(id, name) {
+            if(editSelectedParents.find(p => p.id === id)) return;
+            editSelectedParents.push({id, name});
+            renderEditParents();
+            document.getElementById('editParentSearch').value = '';
+            document.getElementById('editParentResults').style.display = 'none';
+        }
+        function removeEditParent(id) { editSelectedParents = editSelectedParents.filter(p => p.id !== id); renderEditParents(); }
+        function renderEditParents() {
+            const container = document.getElementById('editParentTags');
+            const hiddenInput = document.getElementById('editParentIds');
+            container.innerHTML = '';
+            editSelectedParents.forEach(p => {
+                container.innerHTML += `<span class="lineage-tag" style="background:#e3f2fd; color:#1565c0; padding:4px 8px; border-radius:15px; font-size:0.85rem; display:flex; align-items:center; gap:5px;"><i class="fas fa-link"></i> ${p.name} <i class="fas fa-times" style="cursor:pointer;" onclick="removeEditParent(${p.id})"></i></span>`;
+            });
+            hiddenInput.value = editSelectedParents.map(p => p.id).join(',');
+        }
+
+        function closeModals() { document.getElementById('addModal').style.display = 'none'; document.getElementById('viewModal').style.display = 'none'; }
+        window.onclick = function(e) { if(e.target.classList.contains('modal')) closeModals(); }
+        function selColor(el, hex) { document.querySelectorAll('.color-opt').forEach(d => d.classList.remove('selected')); el.classList.add('selected'); document.getElementById('selectedColor').value = hex; }
+        function selIcon(el, cls) { document.querySelectorAll('.icon-opt').forEach(d => d.classList.remove('selected')); el.classList.add('selected'); document.getElementById('selectedIcon').value = cls; }
+    </script>
+</body>
+</html>

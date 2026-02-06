@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Labs - LIMS Lite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg-color: #f0f2f6; --sidebar-bg: #ffffff; --text-color: #31333F; --primary-color: #ff4b4b; --secondary-color: #262730; --card-radius: 0.5rem; }
+        body { font-family: "Source Sans Pro", sans-serif; background: var(--bg-color); color: var(--text-color); margin: 0; display: flex; height: 100vh; }
+        
+        .sidebar { width: 300px; background: var(--sidebar-bg); padding: 2rem; display: flex; flex-direction: column; border-right: 1px solid #e0e0e0; flex-shrink: 0; }
+        .logo { font-size: 1.5rem; font-weight: 700; color: var(--secondary-color); margin-bottom: 2rem; }
+        .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 12px; color: #333; text-decoration: none; border-radius: 6px; margin-bottom: 8px; font-weight: 600; transition: background 0.2s; }
+        .sidebar-link:hover { background: #f0f0f0; }
+        .sidebar-link.active { background: #ffebeb; color: var(--primary-color); }
+        .sidebar-link i { width: 20px; text-align: center; }
+        
+        /* Search (Standard) */
+        .search-container { position: relative; margin-bottom: 2rem; margin-top: 2rem;}
+        .search-input { width: 100%; padding: 0.7rem 0.7rem 0.7rem 2.2rem; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-family: inherit; }
+        .search-icon { position: absolute; left: 10px; top: 13px; color: #888; font-size: 0.9rem; }
+        #searchResults { display: none; position: absolute; top: 100%; left: 0; width: 100%; background: white; border: 1px solid #ddd; border-radius: 0 0 6px 6px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 1000; overflow: hidden; }
+        .search-item { padding: 10px; cursor: pointer; border-bottom: 1px solid #eee; font-size: 0.9rem; transition: background 0.1s; display: flex; align-items: center; gap: 10px; text-decoration: none; color: inherit; }
+        .search-item:hover { background: #f0f0f0; }
+        .search-tag { font-size: 0.7rem; padding: 2px 6px; border-radius: 4px; color: white; font-weight: bold; text-transform: uppercase; min-width: 60px; text-align: center; }
+        
+        .main-content { flex: 1; padding: 3rem 5rem; overflow-y: auto; }
+        .lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .lab-card { background: white; padding: 2rem; border-radius: var(--card-radius); box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-decoration: none; color: inherit; transition: transform 0.2s; border-left: 5px solid #333; position: relative; }
+        .lab-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .lab-name { font-size: 1.4rem; font-weight: 700; color: #333; margin-bottom: 5px; }
+        .lab-loc { color: #666; display: flex; align-items: center; gap: 5px; margin-bottom: 10px; }
+        
+        /* Modals */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 450px; }
+        input, textarea { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        .btn-modal { width: 100%; padding: 10px; background: var(--primary-color); color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-primary { background: var(--primary-color); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+        .edit-btn { position: absolute; top: 15px; right: 15px; color: #999; cursor: pointer; font-size: 1.1rem; }
+        .edit-btn:hover { color: #333; }
+
+        /* === TAG MANAGER STYLES === */
+        .tag-container { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 5px; min-height: 40px; padding: 5px; border: 1px solid #f0f0f0; border-radius: 4px; background: #fafafa; }
+        .resource-tag { background: #e3f2fd; color: #1565c0; padding: 5px 10px; border-radius: 20px; font-size: 0.85rem; display: flex; align-items: center; gap: 6px; border: 1px solid #bbdefb; }
+        .resource-tag i { cursor: pointer; font-size: 0.8rem; color: #1565c0; opacity: 0.7; }
+        .resource-tag i:hover { opacity: 1; color: #d32f2f; }
+        
+        .add-res-wrapper { display: flex; gap: 5px; margin-top: 5px; }
+        .add-res-btn { background: #333; color: white; border: none; padding: 0 15px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .add-res-btn:hover { background: #555; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="logo"><i class="fas fa-flask"></i> LIMS Lite</div>
+        <a href="/" class="sidebar-link"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/labs" class="sidebar-link active"><i class="fas fa-calendar-alt"></i> Lab Calendars</a>
+        <a href="/projects" class="sidebar-link"><i class="fas fa-folder-open"></i> Projects</a>
+        <a href="/templates" class="sidebar-link"><i class="fas fa-file-alt"></i> Templates</a>
+        <a href="/inventory" class="sidebar-link"><i class="fas fa-boxes"></i> Inventory</a>
+        {% if user.role == 'Admin' %}
+        <a href="/admin" class="sidebar-link" style="color:#d32f2f;"><i class="fas fa-user-shield"></i> Admin Panel</a>
+        {% endif %}
+        
+        <div class="search-container">
+            <form action="/search" method="get" id="searchForm"><i class="fas fa-search search-icon"></i><input type="text" name="q" id="searchInput" class="search-input" placeholder="Search..." autocomplete="off"></form>
+            <div id="searchResults"></div>
+        </div>
+        
+        <div style="margin-top:auto; padding-top:15px; border-top:1px solid #eee;">
+            <div style="font-weight:bold; font-size:0.9rem;">👤 {{ user.username }}</div>
+            <a href="/logout" style="color:#d32f2f; text-decoration:none; font-size:0.85rem;">Sign Out</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <h1 style="margin-bottom:5px;">Select a Lab</h1>
+                <p style="color:#666; margin-top:0;">View calendars and book equipment.</p>
+            </div>
+            <button class="btn-primary" onclick="openCreateModal()">+ Create New Lab</button>
+        </div>
+        
+        <div class="lab-grid">
+            {% for lab in labs %}
+            <div class="lab-card">
+                <i class="fas fa-cog edit-btn" onclick="openEditModal({{ lab.id }}, '{{ lab.name }}', '{{ lab.location }}', `{{ lab.resources or '' }}`)"></i>
+                <a href="/calendar/{{ lab.id }}" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="lab-name"><i class="fas fa-building" style="opacity:0.2;"></i> {{ lab.name }}</div>
+                    <div class="lab-loc"><i class="fas fa-map-marker-alt"></i> {{ lab.location }}</div>
+                    <div style="font-size:0.85rem; color:#666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <i class="fas fa-tools"></i> 
+                        {% if lab.resources %}
+                            {{ lab.resources.replace(',', ' • ') }}
+                        {% else %}
+                            No equipment listed
+                        {% endif %}
+                    </div>
+                    <div style="margin-top:15px; font-size:0.9rem; color:var(--primary-color); font-weight:600;">View Calendar &rarr;</div>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div id="newLabModal" class="modal">
+        <div class="modal-content">
+            <h3>Create New Lab</h3>
+            <form action="/labs/create" method="post" onsubmit="finalizeResources('create')">
+                <label>Lab Name</label><input type="text" name="name" placeholder="e.g. Microscopy Core" required>
+                <label>Location</label><input type="text" name="location" placeholder="e.g. Room 303" required>
+                
+                <label>Resources / Equipment</label>
+                <div class="tag-container" id="createTagBox"></div>
+                <div class="add-res-wrapper">
+                    <input type="text" id="createResInput" placeholder="Type resource name..." onkeypress="handleEnter(event, 'create')">
+                    <button type="button" class="add-res-btn" onclick="addResource('create')">Add</button>
+                </div>
+                <input type="hidden" name="resources" id="createResourcesHidden">
+
+                <button type="submit" class="btn-modal" style="margin-top:20px;">Create Lab</button>
+                <button type="button" onclick="document.getElementById('newLabModal').style.display='none'" style="width:100%; padding:10px; background:none; border:none; color:#666; cursor:pointer; margin-top:5px;">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="editLabModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Lab Details</h3>
+            <form action="/labs/update" method="post" onsubmit="finalizeResources('edit')">
+                <input type="hidden" name="id" id="editId">
+                <label>Lab Name</label><input type="text" name="name" id="editName" required>
+                <label>Location</label><input type="text" name="location" id="editLoc" required>
+                
+                <label>Resources</label>
+                <div class="tag-container" id="editTagBox"></div>
+                <div class="add-res-wrapper">
+                    <input type="text" id="editResInput" placeholder="Type resource name..." onkeypress="handleEnter(event, 'edit')">
+                    <button type="button" class="add-res-btn" onclick="addResource('edit')">Add</button>
+                </div>
+                <input type="hidden" name="resources" id="editResourcesHidden">
+
+                <button type="submit" class="btn-modal" style="margin-top:20px;">Save Changes</button>
+            </form>
+            
+            <form action="/labs/delete" method="post" onsubmit="return confirm('Delete this lab and all bookings?');">
+                <input type="hidden" name="id" id="delId">
+                <button style="width:100%; padding:10px; background:none; border:none; color:red; cursor:pointer; margin-top:10px;">Delete Lab</button>
+            </form>
+            <button onclick="document.getElementById('editLabModal').style.display='none'" style="width:100%; padding:10px; background:none; border:none; color:#666; cursor:pointer;">Close</button>
+        </div>
+    </div>
+    
+    <script>
+        // === RESOURCE MANAGER LOGIC ===
+        let resources = { create: [], edit: [] };
+
+        function openCreateModal() {
+            resources['create'] = [];
+            renderTags('create');
+            document.getElementById('newLabModal').style.display = 'flex';
+        }
+
+        function openEditModal(id, name, loc, resString) {
+            document.getElementById('editId').value = id;
+            document.getElementById('delId').value = id;
+            document.getElementById('editName').value = name;
+            document.getElementById('editLoc').value = loc;
+            
+            // Parse existing string into array
+            resources['edit'] = resString ? resString.split(',').map(s => s.trim()).filter(s => s) : [];
+            renderTags('edit');
+            
+            document.getElementById('editLabModal').style.display = 'flex';
+        }
+
+        function addResource(mode) {
+            const input = document.getElementById(mode + 'ResInput');
+            const val = input.value.trim();
+            if(val) {
+                resources[mode].push(val);
+                input.value = '';
+                renderTags(mode);
+            }
+        }
+
+        function removeResource(mode, index) {
+            resources[mode].splice(index, 1);
+            renderTags(mode);
+        }
+
+        function renderTags(mode) {
+            const container = document.getElementById(mode + 'TagBox');
+            container.innerHTML = '';
+            resources[mode].forEach((res, index) => {
+                const tag = document.createElement('div');
+                tag.className = 'resource-tag';
+                tag.innerHTML = `${res} <i class="fas fa-times" onclick="removeResource('${mode}', ${index})"></i>`;
+                container.appendChild(tag);
+            });
+        }
+
+        function handleEnter(e, mode) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Prevent form submit
+                addResource(mode);
+            }
+        }
+
+        function finalizeResources(mode) {
+            // Join array back to comma-string for the backend
+            document.getElementById(mode + 'ResourcesHidden').value = resources[mode].join(', ');
+        }
+
+        // === SEARCH LOGIC (Standard) ===
+        const searchInput = document.getElementById('searchInput'); 
+        const resultsBox = document.getElementById('searchResults'); 
+        let timer;
+        searchInput.addEventListener('input', e => { 
+            const q = e.target.value; clearTimeout(timer); if(q.length < 2) { resultsBox.style.display='none'; return; } 
+            timer = setTimeout(() => { fetch(`/api/search_autocomplete?q=${q}`).then(r => r.json()).then(d => { if(d.length > 0) { let html = ''; d.forEach(i => { html += `<a href="${i.url}" class="search-item"><div class="search-tag" style="background:${i.color}">${i.category}</div><div style="flex:1;"><div style="font-weight:600;">${i.name}</div><div style="font-size:0.8rem; color:#888;">${i.info}</div></div><i class="fas ${i.icon}" style="color:#ccc;"></i></a>`; }); html += `<div onclick="document.getElementById('searchForm').submit()" style="padding:10px; text-align:center; font-size:0.8rem; color:#666; cursor:pointer; background:#f5f5f5;">View All Results</div>`; resultsBox.innerHTML = html; resultsBox.style.display='block'; } else { resultsBox.style.display='none'; } }); }, 300); 
+        });
+        document.addEventListener('click', function(e) { if (!searchInput.contains(e.target) && !resultsBox.contains(e.target)) { resultsBox.style.display = 'none'; } });
+        window.onclick = function(e) { if(e.target.classList.contains('modal')) e.target.style.display = 'none'; }
+    </script>
+</body>
+</html>

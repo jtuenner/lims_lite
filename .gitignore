@@ -1,0 +1,15 @@
+# Environments
+venv/
+.env
+
+# Databases (Don't push your local lab data to GitHub!)
+customer_dbs/
+*.db
+
+# Backups and Uploads
+backups/
+uploads/
+
+# Python cache
+__pycache__/
+*.pyc

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Procurement - LIMS Lite</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: "Source Sans Pro", sans-serif; background: #f0f2f6; margin: 0; display: flex; height: 100vh; }
+        /* Reuse your existing Sidebar CSS here for consistency, omitted for brevity */
+        .sidebar { width: 300px; background: white; padding: 2rem; border-right: 1px solid #ddd; }
+        .main-content { flex: 1; padding: 3rem; overflow-y: auto; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .btn-primary { background: #333; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; text-decoration: none; font-weight: bold; }
+        
+        .order-card { background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; padding: 20px; display: flex; align-items: center; justify-content: space-between; border-left: 5px solid #ddd; }
+        .status-Pending { border-left-color: #FFC107; }
+        .status-Approved { border-left-color: #2196F3; }
+        .status-Ordered { border-left-color: #9C27B0; }
+        .status-Received { border-left-color: #4CAF50; opacity: 0.7; }
+        
+        .status-badge { padding: 5px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; display: inline-block; }
+        .badge-Pending { background: #FFF8E1; color: #FFC107; }
+        .badge-Approved { background: #E3F2FD; color: #2196F3; }
+        .badge-Ordered { background: #F3E5F5; color: #9C27B0; }
+        .badge-Received { background: #E8F5E9; color: #4CAF50; }
+        
+        .actions { display: flex; gap: 10px; }
+        .btn-action { border: 1px solid #ddd; background: white; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; }
+        .btn-action:hover { background: #f5f5f5; }
+
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); align-items: center; justify-content: center; }
+        .modal-content { background: white; padding: 2rem; border-radius: 8px; width: 400px; }
+        input, textarea { width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h3>LIMS Lite</h3>
+        <a href="/" style="display:block; margin:10px 0;">Dashboard</a>
+        <a href="/orders" style="display:block; margin:10px 0; font-weight:bold;">Procurement</a>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1><i class="fas fa-shopping-cart"></i> Lab Orders</h1>
+            <button onclick="document.getElementById('reqModal').style.display='flex'" class="btn-primary">+ New Request</button>
+        </div>
+
+        <h3>Active Requests</h3>
+        {% for req in pending %}
+        <div class="order-card status-{{ req.status }}">
+            <div style="flex: 1;">
+                <div style="font-weight: bold; font-size: 1.1rem;">{{ req.item_name }} <span style="font-weight:normal; color:#888;">x{{ req.quantity }}</span></div>
+                <div style="color: #666; font-size: 0.9rem; margin-top: 5px;">
+                    Requested by <b>{{ req.requester }}</b> on {{ req.created_at.strftime('%Y-%m-%d') }}
+                    {% if req.url %} | <a href="{{ req.url }}" target="_blank">Link</a> {% endif %}
+                </div>
+                {% if req.reason %}<div style="font-style: italic; color: #888; font-size: 0.85rem; margin-top: 5px;">"{{ req.reason }}"</div>{% endif %}
+            </div>
+            
+            <div style="text-align: right;">
+                <span class="status-badge badge-{{ req.status }}">{{ req.status }}</span>
+                
+                {% if user.role == 'Admin' %}
+                <div class="actions" style="margin-top: 10px;">
+                    <form action="/orders/update_status" method="post">
+                        <input type="hidden" name="req_id" value="{{ req.id }}">
+                        {% if req.status == 'Pending' %}
+                            <button name="status" value="Approved" class="btn-action" style="color:blue;">Approve</button>
+                        {% endif %}
+                        {% if req.status == 'Approved' %}
+                            <button name="status" value="Ordered" class="btn-action" style="color:purple;">Mark Ordered</button>
+                        {% endif %}
+                        {% if req.status == 'Ordered' %}
+                            <button name="status" value="Received" class="btn-action" style="color:green;">Mark Received</button>
+                        {% endif %}
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        
+        {% if not pending %}
+        <div style="text-align:center; color:#999; padding:40px;">No active requests. Good job!</div>
+        {% endif %}
+
+        <h3 style="margin-top: 50px; color: #888;">Order History</h3>
+        <table style="width:100%; color:#666;">
+            {% for h in history %}
+            <tr>
+                <td style="padding:8px; border-bottom:1px solid #eee;">{{ h.item_name }}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">{{ h.requester }}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;">{{ h.updated_at.strftime('%Y-%m-%d') }}</td>
+                <td style="padding:8px; border-bottom:1px solid #eee;"><span class="status-badge badge-Received">Received</span></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div id="reqModal" class="modal">
+        <div class="modal-content">
+            <h3>Request Item</h3>
+            <form action="/orders/request" method="post">
+                <label>Item Name</label>
+                <input type="text" name="item_name" required placeholder="e.g. DMEM Media">
+                <label>Link / Catalog #</label>
+                <input type="text" name="url" placeholder="https://thermofisher...">
+                <label>Quantity</label>
+                <input type="number" name="qty" value="1" min="1">
+                <label>Reason (Optional)</label>
+                <textarea name="reason" placeholder="For project X..."></textarea>
+                
+                <button class="btn-primary" style="width:100%;">Submit Request</button>
+                <button type="button" onclick="document.getElementById('reqModal').style.display='none'" style="background:none; border:none; width:100%; cursor:pointer; margin-top:10px; color:#666;">Cancel</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
