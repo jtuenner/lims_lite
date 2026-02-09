@@ -11,7 +11,22 @@ from typing import Optional
 import random
 import json
 import qrcode
+import psutil
 
+import logging
+from logging.handlers import RotatingFileHandler
+import sys
+
+from starlette.middleware.csrf import CSRFMiddleware
+from werkzeug.utils import secure_filename
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.trustedhost import TrustedHostMiddleware
+from starlette.middleware.sessions import SessionMiddleware
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+import mimetypes
+from pathlib import Path
 from io import BytesIO
 from fastapi import FastAPI, Request, Form, Depends, HTTPException, Body, UploadFile, File, status
 from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse, StreamingResponse, FileResponse
@@ -27,39 +42,205 @@ from sqlmodel import SQLModel, Session, select, or_, and_, func
 # Import your models
 from models import Box, Sample, Freezer, AuditLog, Attachment, Booking, Lab, User, Project, Experiment, ExperimentLink, ExperimentTemplate, Consumable, InviteCode, OrderRequest, SampleLineageLink
 
-# --- CONFIGURATION ---
-SECRET_KEY = os.environ.get("LIMS_SECRET", "CHANGE_THIS_TO_A_SUPER_SECRET_STRING")
-ALGORITHM = "HS256"
-LICENSE_LIMIT = 5  # Users per Lab (Free Tier)
 
-# Folders for Multi-Tenancy
-DB_FOLDER = "customer_dbs"
-UPLOAD_BASE = "uploads"
-BACKUP_DIR = "backups"
+try:
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass
+
+# Create logs directory if it doesn't exist
+os.makedirs("logs", exist_ok=True)
+
+# Configure logging
+def setup_logging():
+    """Configure application logging."""
+    log_level = logging.DEBUG if APP_ENV == "development" else logging.INFO
+    
+    # Format
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
+    )
+    
+    # File handler (rotating)
+    file_handler = RotatingFileHandler(
+        'logs/lims.log',
+        maxBytes=10 * 1024 * 1024,  # 10MB
+        backupCount=5
+    )
+    file_handler.setLevel(log_level)
+    file_handler.setFormatter(formatter)
+    
+    # Console handler
+    console_handler = logging.StreamHandler(sys.stdout)
+    console_handler.setLevel(log_level)
+    console_handler.setFormatter(formatter)
+    
+    # Root logger
+    root_logger = logging.getLogger()
+    root_logger.setLevel(log_level)
+    root_logger.addHandler(file_handler)
+    root_logger.addHandler(console_handler)
+    
+    # Silence noisy libraries
+    logging.getLogger("uvicorn.access").setLevel(logging.WARNING)
+    
+    return logging.getLogger(__name__)
+
+# Initialize logger
+logger = setup_logging()
+
+# Sentry for production error tracking
+if os.environ.get("SENTRY_DSN") and APP_ENV == "production":
+    import sentry_sdk
+    from sentry_sdk.integrations.fastapi import FastApiIntegration
+    
+    sentry_sdk.init(
+        dsn=os.environ.get("SENTRY_DSN"),
+        environment=APP_ENV,
+        traces_sample_rate=0.1,  # 10% of transactions
+        integrations=[FastApiIntegration()],
+    )
+    logger.info("Sentry error tracking initialized")
+
+# --- CONFIGURATION ---
+SECRET_KEY = os.environ.get("LIMS_SECRET")
+APP_ENV = os.environ.get("APP_ENV", "development")
+
+# Security check: Don't let the app start in production without a real secret
+if not SECRET_KEY:
+    if APP_ENV == "production":
+        raise RuntimeError("LIMS_SECRET environment variable is not set!")
+    else:
+        SECRET_KEY = "dev_only_secret" # Fallback for local testing only
+
+ALGORITHM = "HS256"
+LICENSE_LIMIT = int(os.environ.get("LICENSE_LIMIT", 5))
+
+# ADD THIS: Dynamic Base URL for QR codes
+BASE_URL = os.environ.get("BASE_URL", "http://localhost:8000")
+
+# Folders for Multi-Tenancy (Ensures they are created)
+DB_FOLDER = os.environ.get("DB_FOLDER", "customer_dbs")
+UPLOAD_BASE = os.environ.get("UPLOAD_BASE", "uploads")
+BACKUP_DIR = os.environ.get("BACKUP_DIR", "backups")
 
 for folder in [DB_FOLDER, UPLOAD_BASE, BACKUP_DIR]:
     os.makedirs(folder, exist_ok=True)
 
-pwd_context = CryptContext(schemes=["argon2"], deprecated="auto")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+pwd_context = CryptContext(
+    schemes=["argon2", "bcrypt"],  # Argon2 primary, bcrypt fallback
+    deprecated="auto",
+    argon2__memory_cost=65536,  # 64 MB
+    argon2__time_cost=3,
+    argon2__parallelism=4
+)
+
+def verify_password(plain: str, hashed: str) -> bool:
+    """Verify password and rehash if using deprecated scheme."""
+    return pwd_context.verify(plain, hashed)
+
+def get_password_hash(password: str) -> str:
+    """Hash password using Argon2."""
+    return pwd_context.hash(password)
+
+def needs_rehash(hashed: str) -> bool:
+    """Check if hash needs to be updated (e.g., from bcrypt to argon2)."""
+    return pwd_context.needs_update(hashed)
 
 app = FastAPI()
 # Mount uploads root (In production, use a proxy or specific file serve route for security)
-app.mount("/uploads", StaticFiles(directory=UPLOAD_BASE), name="uploads")
 templates = Jinja2Templates(directory="templates")
+
+# CORS Configuration
+allowed_origins = ["https://*.limslite.com", "https://limslite.com"] if APP_ENV == "production" else ["*"]
+
+app.add_middleware(
+    CSRFMiddleware,
+    secret=SECRET_KEY,
+    exempt_urls=["/webhooks/*", "/api/*"]  # Exempt API endpoints
+)
+
+# Session middleware for secure cookies
+app.add_middleware(
+    SessionMiddleware, 
+    secret_key=SECRET_KEY,
+    session_cookie="lims_session",
+    max_age=86400,  # 24 hours
+    same_site="lax",
+    https_only=APP_ENV == "production"
+)
+
+# Trusted host middleware (production only)
+if APP_ENV == "production":
+    app.add_middleware(
+        TrustedHostMiddleware, 
+        allowed_hosts=["*.limslite.com", "limslite.com"]
+    )
+
+# Rate limiter
+limiter = Limiter(key_func=get_remote_address, default_limits=["200/minute"])
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
+# Security headers middleware
+@app.middleware("http")
+async def add_security_headers(request: Request, call_next):
+    """Add security headers to all responses."""
+    response = await call_next(request)
+    
+    # Prevent XSS
+    response.headers["X-Content-Type-Options"] = "nosniff"
+    response.headers["X-Frame-Options"] = "DENY"
+    response.headers["X-XSS-Protection"] = "1; mode=block"
+    
+    # HSTS (force HTTPS)
+    if APP_ENV == "production":
+        response.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload"
+    
+    # CSP (Content Security Policy)
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; "
+        "font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; "
+        "img-src 'self' data: https:; "
+        "connect-src 'self';"
+    )
+    
+    return response
+
+# Request logging middleware
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    """Log all requests for audit trail."""
+    start_time = time.time()
+    
+    response = await call_next(request)
+    
+    process_time = time.time() - start_time
+    logger.info(
+        f"{request.method} {request.url.path} "
+        f"status={response.status_code} "
+        f"duration={process_time:.3f}s "
+        f"ip={request.client.host}"
+    )
+    
+    return response
 
 # --- MULTI-TENANCY HELPERS ---
 
 def get_subdomain(request: Request) -> str:
-    """Extracts subdomain from Host header. Returns 'www' or None if root."""
-    host = request.headers.get("host", "")
-    if "localhost" in host or "127.0.0.1" in host:
-        # DEVELOPMENT HACK: 
-        # If accessing via localhost:8000, we treat it as the 'devlab' tenant.
-        # To test the Landing Page locally, change this return to None or "www"
-        return "devlab" 
+    # Look for proxy headers first, then the direct host
+    host = request.headers.get("x-forwarded-host", request.headers.get("host", ""))
+    
+    # Bypass subdomain logic during local dev
+    if ("localhost" in host or "127.0.0.1" in host) and APP_ENV != "production":
+        return os.environ.get("DEV_TENANT", "devlab")
     
     parts = host.split('.')
+    # If using biolab.limslite.de, len(parts) is 3. parts[0] is 'biolab'
     if len(parts) > 2:
         return parts[0]
     return "www"
@@ -122,6 +303,57 @@ def create_access_token(data: dict, lab_name: str):
     })
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
+# Allowed file extensions
+ALLOWED_EXTENSIONS = {
+    '.pdf', '.jpg', '.jpeg', '.png', '.gif', '.webp',  # Images/docs
+    '.xlsx', '.xls', '.csv', '.tsv',  # Spreadsheets
+    '.txt', '.md', '.docx', '.doc',  # Text files
+    '.zip'  # Archives
+}
+
+# Max file size (10MB default)
+MAX_FILE_SIZE = int(os.environ.get("MAX_FILE_SIZE", 10 * 1024 * 1024))
+
+def validate_and_secure_filename(file: UploadFile) -> str:
+    """
+    Validate file upload and return secured filename.
+    Raises HTTPException if validation fails.
+    """
+    # Check file size
+    file.file.seek(0, 2)  # Seek to end
+    file_size = file.file.tell()
+    file.file.seek(0)  # Reset to start
+    
+    if file_size > MAX_FILE_SIZE:
+        max_mb = MAX_FILE_SIZE / 1024 / 1024
+        raise HTTPException(
+            status_code=400, 
+            detail=f"File too large. Maximum size: {max_mb:.1f}MB"
+        )
+    
+    if file_size == 0:
+        raise HTTPException(status_code=400, detail="Empty file uploaded")
+    
+    # Check extension
+    filename = file.filename or "unnamed"
+    ext = os.path.splitext(filename)[1].lower()
+    
+    if ext not in ALLOWED_EXTENSIONS:
+        raise HTTPException(
+            status_code=400, 
+            detail=f"File type '{ext}' not allowed. Allowed types: {', '.join(ALLOWED_EXTENSIONS)}"
+        )
+    
+    # Secure the filename (prevent directory traversal)
+    secured = secure_filename(filename)
+    
+    # Add timestamp to prevent overwrites
+    name, ext = os.path.splitext(secured)
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    unique_filename = f"{name}_{timestamp}{ext}"
+    
+    return unique_filename
+
 async def get_current_user(request: Request, session: Session = Depends(get_session)):
     if not session: return None
     token = request.cookies.get("access_token")
@@ -150,6 +382,49 @@ async def login_required(request: Request, user: User = Depends(get_current_user
 async def admin_required(user: User = Depends(login_required)):
     if user.role != "Admin": raise HTTPException(status_code=403, detail="Admin privileges required")
     return user
+
+@app.get("/files/{tenant}/{filename:path}")
+async def serve_file(
+    tenant: str, 
+    filename: str, 
+    request: Request,
+    user: User = Depends(login_required),
+    session: Session = Depends(get_session)
+):
+    """
+    Securely serve files only to authenticated users of the correct tenant.
+    Prevents directory traversal and cross-tenant access.
+    """
+    # Verify user is accessing their own tenant's files
+    current_tenant = get_lab_name(request)
+    if tenant != current_tenant:
+        raise HTTPException(status_code=403, detail="Access denied to this tenant's files")
+    
+    # Construct file path
+    file_path = os.path.join(UPLOAD_BASE, tenant, filename)
+    
+    # Check file exists
+    if not os.path.exists(file_path):
+        raise HTTPException(status_code=404, detail="File not found")
+    
+    # Prevent directory traversal attacks
+    real_path = os.path.realpath(file_path)
+    base_path = os.path.realpath(os.path.join(UPLOAD_BASE, tenant))
+    
+    if not real_path.startswith(base_path):
+        logger.warning(f"Directory traversal attempt: {filename} by {user.username}")
+        raise HTTPException(status_code=403, detail="Invalid file path")
+    
+    # Determine content type
+    content_type, _ = mimetypes.guess_type(file_path)
+    if content_type is None:
+        content_type = "application/octet-stream"
+    
+    return FileResponse(
+        file_path, 
+        media_type=content_type,
+        filename=Path(filename).name
+    )
 
 def log_action(session: Session, action: str, user: User, details: str = "", sample_id: int = None, consumable_id: int = None):
     session.add(AuditLog(action=action, user_name=user.username, details=details, sample_id=sample_id, consumable_id=consumable_id))
@@ -223,6 +498,60 @@ def update_biomass(session: Session, user: User):
     user.petri_score = max(10, int(mins / 3))
     session.add(user); session.commit()
 
+@app.get("/health")
+async def health_check(session: Session = Depends(get_session)):
+    """
+    Health check endpoint for load balancers and monitoring.
+    Returns 200 if healthy, 503 if unhealthy.
+    """
+    try:
+        # Test database connection
+        if session:
+            session.exec(select(User).limit(1))
+        
+        return JSONResponse({
+            "status": "healthy",
+            "timestamp": datetime.now().isoformat(),
+            "version": "1.0.0",
+            "environment": APP_ENV
+        })
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        raise HTTPException(
+            status_code=503, 
+            detail="Service unhealthy"
+        )
+
+@app.get("/metrics")
+async def metrics():
+    """
+    Basic metrics endpoint.
+    For production, use Prometheus client library.
+    """
+    return JSONResponse({
+        "version": "1.0.0",
+        "uptime_seconds": time.time() - app.state.start_time if hasattr(app.state, 'start_time') else 0,
+        "cpu_percent": psutil.cpu_percent(interval=1),
+        "memory_percent": psutil.virtual_memory().percent,
+        "disk_percent": psutil.disk_usage('/').percent
+    })
+
+@app.on_event("startup")
+async def startup_event():
+    """Run on application startup."""
+    app.state.start_time = time.time()
+    logger.info(f"LIMS application starting in {APP_ENV} mode")
+    
+    # Log configuration (without secrets)
+    logger.info(f"Database folder: {DB_FOLDER}")
+    logger.info(f"Upload folder: {UPLOAD_BASE}")
+    logger.info(f"License limit: {LICENSE_LIMIT}")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    """Run on application shutdown."""
+    logger.info("LIMS application shutting down")
+
 # ================= ROUTES =================
 
 # --- LANDING PAGE (SaaS Sales Page) ---
@@ -256,7 +585,7 @@ def root_router(request: Request, user: User = Depends(get_current_user), sessio
     return dashboard_view(request, user, session)
 
 @app.post("/create_lab")
-def create_lab_endpoint(request: Request, lab_name: str = Form(...)):
+def create_lab_endpoint(request: Request, lab_name: str = Form(...), licenses: int = Form(5)):
     # Sanitize
     clean_name = re.sub(r'[^a-zA-Z0-9]', '', lab_name).lower()
     if len(clean_name) < 3: return "Name too short"
@@ -266,18 +595,17 @@ def create_lab_endpoint(request: Request, lab_name: str = Form(...)):
     if os.path.exists(db_path):
         return f"Lab '{clean_name}' already exists! Try logging in at {clean_name}.yourdomain.com"
     
-    # Initialize DB (Force creation)
+    # Initialize DB and Seed Defaults
     sqlite_url = f"sqlite:///{db_path}"
     engine = create_engine(sqlite_url, connect_args={"check_same_thread": False}, poolclass=StaticPool)
     SQLModel.metadata.create_all(engine)
     
-    # Seed Defaults
     with Session(engine) as session:
         session.add(Freezer(name="Main Fridge", location="Lab"))
-        session.add(Lab(name="Main Lab", location="Room 1"))
+        # UPDATED: Set the user_limit based on the signup choice
+        session.add(Lab(name="Main Lab", location="Room 1", user_limit=licenses)) 
         session.commit()
         
-    # Redirect (In production, redirect to sub-domain)
     return f"Lab Created! Go to http://{clean_name}.yourdomain.com"
 
 # --- DASHBOARD LOGIC ---
@@ -296,6 +624,58 @@ def dashboard_view(request, user, session):
     return templates.TemplateResponse("dashboard.html", {"request": request, "user": user, "freezers": freezers, "stats": stats, "agenda": agenda, "leaderboard": leaderboard})
 
 # --- AUTH ROUTES ---
+
+@app.post("/login")
+@limiter.limit("5/minute")  # Only 5 attempts per minute per IP
+async def login(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    session: Session = Depends(get_session)
+):
+    if not session:
+        return templates.TemplateResponse("login.html", {
+            "request": request,
+            "error": "Service unavailable"
+        })
+    
+    # Add delay to slow down brute force (even on failed attempts)
+    await asyncio.sleep(0.5)
+    
+    user = session.exec(select(User).where(User.username == username)).first()
+    
+    if not user or not verify_password(password, user.hashed_password):
+        # Log failed attempt
+        logger.warning(f"Failed login attempt for user: {username} from IP: {request.client.host}")
+        
+        return templates.TemplateResponse("login.html", {
+            "request": request,
+            "error": "Invalid credentials"
+        })
+    
+    # Update last active
+    user.last_active = datetime.now()
+    session.add(user)
+    session.commit()
+    
+    # Create JWT token with tenant scope
+    lab_name = get_lab_name(request)
+    token = create_access_token({"sub": user.username}, lab_name)
+    
+    response = RedirectResponse("/", status_code=303)
+    response.set_cookie(
+        "access_token", 
+        f"Bearer {token}",
+        httponly=True,  # Prevent XSS access
+        secure=APP_ENV == "production",  # HTTPS only in prod
+        samesite="lax",
+        max_age=604800  # 7 days
+    )
+    
+    logger.info(f"Successful login: {username} from IP: {request.client.host}")
+    
+    return response
+
 @app.get("/login", response_class=HTMLResponse)
 def login_page(request: Request): return templates.TemplateResponse("login.html", {"request": request})
 
@@ -320,20 +700,97 @@ def register_page(request: Request, code: str = None, session: Session = Depends
     return templates.TemplateResponse("register.html", {"request": request, "code": code, "is_first": (user_count == 0)})
 
 @app.post("/register")
-def register_submit(username: str = Form(...), password: str = Form(...), invite_code: str = Form(None), session: Session = Depends(get_session)):
+@limiter.limit("3/hour")  # Only 3 registrations per hour per IP
+async def register(
+    request: Request,
+    username: str = Form(...),
+    password: str = Form(...),
+    invite_code: str = Form(None),
+    session: Session = Depends(get_session)
+):
+    if not session:
+        return RedirectResponse("/login", status_code=303)
+    
+    # Validate password strength
+    if len(password) < 8:
+        return templates.TemplateResponse("register.html", {
+            "request": request,
+            "error": "Password must be at least 8 characters",
+            "is_first": not session.exec(select(User)).first()
+        })
+    
+    # Check for common patterns
+    common_passwords = ['password', '12345678', 'qwerty', 'admin123']
+    if password.lower() in common_passwords:
+        return templates.TemplateResponse("register.html", {
+            "request": request,
+            "error": "Password too common. Choose a stronger password.",
+            "is_first": not session.exec(select(User)).first()
+        })
+    
+    # Check if username already exists
+    if session.exec(select(User).where(User.username == username)).first():
+        return templates.TemplateResponse("register.html", {
+            "request": request,
+            "error": "Username already taken",
+            "is_first": False
+        })
+    # 1. Check current user count
     user_count = session.exec(select(func.count(User.id))).one()
+    
+    # 2. Fetch the lab configuration to get the specific seat limit
+    lab_config = session.exec(select(Lab)).first()
+    current_limit = lab_config.user_limit if lab_config else 5
+    
+    # The first person to sign up is always the Admin
     role = "Admin" if user_count == 0 else "User"
     
+    # Logic for everyone EXCEPT the first Admin
     if user_count > 0:
-        if not invite_code: return templates.TemplateResponse("register.html", {"request": {}, "error": "Invite Code Required"})
-        valid_code = session.exec(select(InviteCode).where(InviteCode.code == invite_code, InviteCode.is_used == False)).first()
-        if not valid_code: return templates.TemplateResponse("register.html", {"request": {}, "error": "Invalid Code"})
-        if user_count >= LICENSE_LIMIT: return templates.TemplateResponse("register.html", {"request": {}, "error": "Plan Limit Reached"})
-        valid_code.is_used = True; session.add(valid_code)
+        # Check if they provided an invite code
+        if not invite_code: 
+            return templates.TemplateResponse("register.html", {
+                "request": request, 
+                "error": "Invite Code Required for new users."
+            })
+        
+        # Validate the invite code
+        valid_code = session.exec(
+            select(InviteCode).where(
+                InviteCode.code == invite_code, 
+                InviteCode.is_used == False
+            )
+        ).first()
+        
+        if not valid_code: 
+            return templates.TemplateResponse("register.html", {
+                "request": request, 
+                "error": "Invalid or already used Invite Code."
+            })
+        
+        # ENFORCEMENT: Check against the database-driven limit
+        if user_count >= current_limit: 
+            return templates.TemplateResponse("register.html", {
+                "request": request, 
+                "error": f"Plan Limit Reached. This lab is limited to {current_limit} users."
+            })
+            
+        # Mark code as used
+        valid_code.is_used = True
+        session.add(valid_code)
 
+    # 3. Create the User
     colors = ["#FF5252", "#448AFF", "#69F0AE", "#E040FB", "#FFAB40", "#FFFF00", "#00E5FF"]
-    session.add(User(username=username, hashed_password=get_password_hash(password), role=role, petri_color=random.choice(colors)))
+    new_user = User(
+        username=username, 
+        hashed_password=get_password_hash(password), # Assuming this helper exists in your main.py
+        role=role, 
+        petri_color=random.choice(colors)
+    )
+    
+    session.add(new_user)
     session.commit()
+    
     return RedirectResponse(url="/login", status_code=303)
 
 @app.get("/logout")
@@ -487,19 +944,39 @@ def save_experiment_progress(exp_id: int = Body(...), progress: str = Body(...),
     session.commit()
     return {"status": "success"}
 
-@app.post("/sample/upload")
-async def upload_file(request: Request, sample_id: int = Form(...), file: UploadFile = File(...), user: User = Depends(login_required), session: Session = Depends(get_session)):
-    upload_dir = get_upload_dir(get_lab_name(request))
-    filename = f"{sample_id}_{file.filename}"
-    loc = os.path.join(upload_dir, filename)
+@app.post("/api/experiment/upload")
+async def upload_file(
+    file: UploadFile = File(...),
+    experiment_id: int = Form(...),
+    user: User = Depends(login_required),
+    session: Session = Depends(get_session),
+    request: Request = None
+):
+    # VALIDATE FILE FIRST
+    secured_filename = validate_and_secure_filename(file)
     
-    with open(loc, "wb") as b: shutil.copyfileobj(file.file, b)
-    rel_path = os.path.join("uploads", get_lab_name(request), filename)
+    # Get tenant-specific upload directory
+    tenant = get_lab_name(request)
+    upload_dir = get_upload_dir(tenant)
     
-    session.add(Attachment(sample_id=sample_id, filename=file.filename, filepath=rel_path))
-    log_action(session, "Attachment", user, f"Uploaded {file.filename}", sample_id=sample_id)
+    # Save file securely
+    file_path = os.path.join(upload_dir, secured_filename)
+    
+    with open(file_path, "wb") as f:
+        shutil.copyfileobj(file.file, f)
+    
+    # Store in database with relative path
+    attachment = Attachment(
+        filename=secured_filename,
+        filepath=f"{tenant}/{secured_filename}",  # Relative path
+        experiment_id=experiment_id
+    )
+    session.add(attachment)
     session.commit()
-    return RedirectResponse(url=f"/box/{session.get(Sample, sample_id).box_id}", status_code=303)
+    
+    logger.info(f"File uploaded: {secured_filename} by {user.username}")
+    
+    return {"status": "success", "filename": secured_filename}
 
 # ... Standard Routes below are SAFE to reuse from before because they rely on 'session' dependency
 @app.get("/search")
@@ -1005,8 +1482,18 @@ def view_labs(request: Request, user: User = Depends(login_required), session: S
     return templates.TemplateResponse("lab_list.html", {"request": request, "labs": session.exec(select(Lab)).all(), "user": user})
 
 @app.post("/labs/create")
-def create_lab(name: str = Form(...), location: str = Form(...), user: User = Depends(admin_required), session: Session = Depends(get_session)): 
-    session.add(Lab(name=name, location=location)); session.commit(); return RedirectResponse("/labs", 303)
+def create_lab(
+    name: str = Form(...), 
+    location: str = Form(...), 
+    user_limit: int = Form(5), # ADDED
+    user: User = Depends(admin_required), 
+    session: Session = Depends(get_session)
+): 
+    # Create the lab with the chosen limit
+    new_lab = Lab(name=name, location=location, user_limit=user_limit)
+    session.add(new_lab)
+    session.commit()
+    return RedirectResponse("/labs", 303)
 
 @app.post("/labs/update")
 def update_lab(id: int = Form(...), name: str = Form(...), location: str = Form(...), resources: str = Form(...), user: User = Depends(admin_required), session: Session = Depends(get_session)): 
@@ -1086,7 +1573,7 @@ def generate_qr(type: str, id: int, session: Session = Depends(get_session)):
 
     # Generate QR
     # In production, use your full domain: https://biolab.limslite.com/...
-    full_url = f"http://localhost:8000{url}" 
+    full_url = f"{BASE_URL}{url}" 
     
     qr = qrcode.QRCode(box_size=10, border=4)
     qr.add_data(full_url)

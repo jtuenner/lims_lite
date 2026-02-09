@@ -30,6 +30,7 @@ class Lab(SQLModel, table=True):
     location: str
     resources: str = Field(default="General Bench")
     bookings: List["Booking"] = Relationship(back_populates="lab")
+    user_limit: int = Field(default=5)
 
 class Consumable(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
