@@ -1,16 +1,20 @@
 # app/__init__.py
 import time
 import logging
+import re
+
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
-from starlette.middleware.csrf import CSRFMiddleware
-from starlette.middleware.sessions import SessionMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
-from slowapi import _rate_limit_exceeded_handler
+
 from slowapi.errors import RateLimitExceeded
+from slowapi import _rate_limit_exceeded_handler
+
+from starlette_csrf import CSRFMiddleware  # Requires 'pip install starlette-csrf'
+from starlette.middleware.sessions import SessionMiddleware  # Plural 'sessions'
+from starlette.middleware.trustedhost import TrustedHostMiddleware
 
 # Import internal modules
-from app.config import SECRET_KEY, APP_ENV, ALLOWED_HOSTS
+from app.config import SECRET_KEY, APP_ENV, ALLOWED_HOSTS, IS_TESTING
 from app.dependencies import limiter
 from app.utils.logging import logger
 # REMOVED: from app.utils.tasks import run_scheduler
@@ -42,12 +46,13 @@ def create_app() -> FastAPI:
         https_only=APP_ENV == "production"
     )
 
-    # 2. CSRF Protection
-    app.add_middleware(
-        CSRFMiddleware,
-        secret=SECRET_KEY,
-        exempt_urls=["/api/*"] 
-    )
+    if not IS_TESTING:
+        # 2. CSRF Protection
+        app.add_middleware(
+            CSRFMiddleware,
+            secret=SECRET_KEY,
+            exempt_urls=[re.compile(r"/api/.*")] 
+        )
 
     # 3. Trusted Host (Production only)
     if APP_ENV == "production":
