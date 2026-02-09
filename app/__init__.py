@@ -13,11 +13,11 @@ from slowapi.errors import RateLimitExceeded
 from app.config import SECRET_KEY, APP_ENV, ALLOWED_HOSTS
 from app.dependencies import limiter
 from app.utils.logging import logger
-from app.utils.tasks import run_scheduler
-import threading
+# REMOVED: from app.utils.tasks import run_scheduler
+# REMOVED: import threading
 
 # Import Routers
-from app.routers import auth, admin, inventory, projects, storage, labs, search, templates_mgmt, files
+from app.routers import auth, admin, inventory, projects, storage, labs, search, templates_mgmt, files, home
 
 def create_app() -> FastAPI:
     """
@@ -84,7 +84,6 @@ def create_app() -> FastAPI:
         return response
 
     # --- ROUTER INCLUSION ---
-    # Registering all the domain modules created previously
     app.include_router(auth.router)
     app.include_router(admin.router)
     app.include_router(inventory.router)
@@ -94,17 +93,15 @@ def create_app() -> FastAPI:
     app.include_router(search.router)
     app.include_router(templates_mgmt.router)
     app.include_router(files.router)
+    app.include_router(home.router)
 
-    # --- STATIC FILES ---
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
-    # --- LIFECYCLE EVENTS ---
     @app.on_event("startup")
     async def startup_event():
         app.state.start_time = time.time()
         logger.info(f"LIMS Lite starting in {APP_ENV} mode")
-        # Start the background backup scheduler
-        threading.Thread(target=run_scheduler, daemon=True).start()
+        # REMOVED: The thread starter is gone.
 
     @app.on_event("shutdown")
     async def shutdown_event():
@@ -112,5 +109,4 @@ def create_app() -> FastAPI:
 
     return app
 
-# Create the final app instance
 app = create_app()

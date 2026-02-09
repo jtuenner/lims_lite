@@ -20,7 +20,8 @@ logger = logging.getLogger(__name__)
 # --- SHARED RESOURCES ---
 
 # Initialize Jinja2 templates and the rate limiter
-templates = Jinja2Templates(directory="templates")
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+templates = Jinja2Templates(directory=os.path.join(BASE_DIR, "templates"))
 limiter = Limiter(key_func=get_remote_address, default_limits=["200/minute"])
 
 # --- MULTI-TENANCY HELPERS ---

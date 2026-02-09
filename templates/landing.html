@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIMS Lite | Modern Lab Management</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans text-slate-900">
+
+    <nav class="flex items-center justify-between px-8 py-6 bg-white border-b border-slate-200">
+        <div class="flex items-center gap-2">
+            <span class="text-2xl">🧪</span>
+            <span class="text-xl font-bold tracking-tight">LIMS<span class="text-blue-600">Lite</span></span>
+        </div>
+        <div class="flex gap-6 items-center">
+            <a href="#features" class="text-sm font-medium hover:text-blue-600 transition">Features</a>
+            <a href="#pricing" class="text-sm font-medium hover:text-blue-600 transition">Pricing</a>
+            <a href="/login" class="px-4 py-2 text-sm font-semibold text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition">Log In</a>
+        </div>
+    </nav>
+
+    <header class="px-8 py-20 max-w-6xl mx-auto text-center">
+        <h1 class="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+            The Operating System for <br><span class="gradient-text">Modern Laboratories.</span>
+        </h1>
+        <p class="text-lg text-slate-600 mb-10 max-w-2xl mx-auto">
+            Stop managing your lab with messy spreadsheets. Organize your inventory, track sample lineage, and book equipment—all in one place.
+        </p>
+
+        <div class="bg-white p-2 rounded-2xl shadow-xl border border-slate-200 inline-flex flex-wrap md:flex-nowrap items-center w-full max-w-lg mx-auto">
+            <form action="/create_lab" method="POST" class="flex w-full">
+                <div class="flex-1 px-4 py-3 flex items-center border-r border-slate-100">
+                    <span class="text-slate-400 mr-2">https://</span>
+                    <input type="text" name="lab_name" placeholder="your-lab-name" required
+                           class="w-full focus:outline-none font-medium placeholder:text-slate-300">
+                    <span class="text-slate-400 ml-2">.limslite.com</span>
+                </div>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-3 rounded-xl font-bold hover:bg-blue-700 transition m-1 shadow-lg shadow-blue-200">
+                    Get Started
+                </button>
+            </form>
+        </div>
+        <p class="mt-4 text-xs text-slate-400">No credit card required. Deploy in seconds.</p>
+    </header>
+
+    <section id="features" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Everything your team needs</h2>
+                <div class="h-1 w-20 bg-blue-600 mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="group">
+                    <div class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-boxes-stacked text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Smart Inventory</h3>
+                    <p class="text-slate-500 leading-relaxed">Track reagents and consumables with automated low-stock alerts and procurement workflows.</p>
+                </div>
+
+                <div class="group">
+                    <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-purple-600 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-dna text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Sample Lineage</h3>
+                    <p class="text-slate-500 leading-relaxed">Visualize the family tree of your samples. Automatically track ancestry and experimental history.</p>
+                </div>
+
+                <div class="group">
+                    <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300">
+                        <i class="fa-solid fa-calendar-check text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Equipment Booking</h3>
+                    <p class="text-slate-500 leading-relaxed">Prevent scheduling conflicts with a centralized calendar for microscopes, hoods, and PCR machines.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white overflow-hidden relative">
+        <div class="max-w-6xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between gap-12">
+            <div class="z-10">
+                <h2 class="text-4xl font-bold mb-6">Designed for Scientists.</h2>
+                <ul class="space-y-4">
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        <span>Secure Multi-tenant Data Isolation</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        <span>Automated Daily Backups</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                        <i class="fa-solid fa-circle-check text-emerald-400"></i>
+                        <span>Mobile-friendly QR Code Integration</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="relative z-10 bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
+                <div class="text-5xl font-bold text-blue-400 mb-2">99.9%</div>
+                <div class="text-slate-400 uppercase tracking-widest text-sm font-semibold">Uptime Guarantee</div>
+            </div>
+        </div>
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-blue-500 rounded-full blur-[120px] opacity-20"></div>
+    </section>
+
+    <footer class="py-12 px-8 border-t border-slate-200 bg-white">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-2 grayscale opacity-70">
+                <span class="text-xl">🧪</span>
+                <span class="font-bold tracking-tight">LIMS Lite</span>
+            </div>
+            <p class="text-slate-400 text-sm">© 2026 LIMS Lite SaaS. All rights reserved.</p>
+            <div class="flex gap-6">
+                <a href="#" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-brands fa-github"></i></a>
+                <a href="#" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-brands fa-linkedin"></i></a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
