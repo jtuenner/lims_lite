@@ -1,0 +1,99 @@
+2026-02-09 16:38:21 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:38:21 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:38:21 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:39:05 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:39:05 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:39:05 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:39:06 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:39:06 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:40:04 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:40:04 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:40:04 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:40:04 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:40:04 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:42:05 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:42:05 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:42:05 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:42:05 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:42:05 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:42:05 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:42:05 - app.utils.logging - INFO - GET / status=307 duration=0.003s
+2026-02-09 16:42:05 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:42:05 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:42:05 - app.utils.logging - INFO - GET /login status=200 duration=0.003s
+2026-02-09 16:42:05 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:42:05 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:42:06 - passlib.handlers.argon2 - DEBUG - detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-02-09 16:42:06 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:42:06 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:42:06 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 16:42:06 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:42:06 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:42:06 - app.utils.logging - INFO - GET /login status=200 duration=0.000s
+2026-02-09 16:42:06 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:43:59 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:43:59 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:43:59 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:43:59 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:43:59 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:43:59 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:43:59 - app.utils.logging - INFO - GET / status=307 duration=0.000s
+2026-02-09 16:43:59 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:43:59 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:43:59 - app.utils.logging - INFO - GET /login status=200 duration=0.002s
+2026-02-09 16:43:59 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:43:59 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:43:59 - app.utils.logging - INFO - POST /create_lab status=403 duration=0.000s
+2026-02-09 16:43:59 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 403 Forbidden"
+2026-02-09 16:43:59 - passlib.handlers.argon2 - DEBUG - detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-02-09 16:43:59 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:43:59 - app.utils.logging - INFO - POST /inventory/create status=403 duration=0.000s
+2026-02-09 16:43:59 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 403 Forbidden"
+2026-02-09 16:43:59 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:43:59 - app.utils.logging - INFO - GET /inventory status=307 duration=0.001s
+2026-02-09 16:43:59 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:43:59 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:43:59 - app.utils.logging - INFO - GET /login status=200 duration=0.000s
+2026-02-09 16:43:59 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:46:09 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:46:09 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:46:09 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:46:09 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:46:09 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:46:09 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:46:09 - app.utils.logging - INFO - GET / status=307 duration=0.001s
+2026-02-09 16:46:09 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:46:09 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:46:09 - app.utils.logging - INFO - GET /login status=200 duration=0.006s
+2026-02-09 16:46:09 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:46:09 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:46:09 - app.utils.logging - INFO - POST /create_lab status=403 duration=0.000s
+2026-02-09 16:46:09 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 403 Forbidden"
+2026-02-09 16:46:09 - passlib.handlers.argon2 - DEBUG - detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-02-09 16:46:09 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:46:09 - app.utils.logging - INFO - POST /inventory/create status=403 duration=0.000s
+2026-02-09 16:46:09 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 403 Forbidden"
+2026-02-09 16:46:10 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:46:10 - app.utils.logging - INFO - GET /inventory status=307 duration=0.006s
+2026-02-09 16:46:10 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:50:20 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:50:20 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:50:20 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:50:20 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:50:20 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:50:20 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:50:20 - app.utils.logging - INFO - GET / status=307 duration=0.002s
+2026-02-09 16:50:20 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:50:20 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:50:20 - app.utils.logging - INFO - GET /login status=200 duration=0.003s
+2026-02-09 16:50:20 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:50:20 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:50:20 - app.utils.logging - INFO - POST /create_lab status=403 duration=0.001s
+2026-02-09 16:50:20 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 403 Forbidden"
+2026-02-09 16:50:20 - passlib.handlers.argon2 - DEBUG - detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-02-09 16:50:20 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:50:20 - app.utils.logging - INFO - POST /inventory/create status=403 duration=0.001s
+2026-02-09 16:50:20 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 403 Forbidden"
+2026-02-09 16:50:20 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:50:20 - app.utils.logging - INFO - GET /inventory status=307 duration=0.000s
+2026-02-09 16:50:20 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"

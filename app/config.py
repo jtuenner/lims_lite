@@ -5,6 +5,9 @@ from pathlib import Path
 # --- CORE SETTINGS ---
 # Environment: 'development' or 'production'
 APP_ENV = os.environ.get("APP_ENV", "development")
+DEV_TENANT = os.environ.get("DEV_TENANT", "devlab")
+
+IS_TESTING = os.environ.get("IS_TESTING", "false").lower() == "true"
 
 # Security: Secret key for JWT and session signing
 SECRET_KEY = os.environ.get("LIMS_SECRET")
