@@ -29,6 +29,7 @@
         {% endif %}
 
         <form action="/register" method="post">
+            <input type="hidden" name="csrf_token" value="{{ request.scope.get('csrftoken', '') }}">
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Password" required>
             
