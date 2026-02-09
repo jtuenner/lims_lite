@@ -97,3 +97,89 @@
 2026-02-09 16:50:20 - asyncio - DEBUG - Using proactor: IocpProactor
 2026-02-09 16:50:20 - app.utils.logging - INFO - GET /inventory status=307 duration=0.000s
 2026-02-09 16:50:20 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:54:09 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-09 16:54:09 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-09 16:54:09 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-09 16:54:09 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-09 16:54:09 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-09 16:54:10 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:54:10 - app.utils.logging - INFO - GET / status=307 duration=0.000s
+2026-02-09 16:54:10 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:54:10 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:54:10 - app.utils.logging - INFO - GET /login status=200 duration=0.002s
+2026-02-09 16:54:10 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:54:10 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:54:10 - app.utils.logging - INFO - POST /create_lab status=403 duration=0.000s
+2026-02-09 16:54:10 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 403 Forbidden"
+2026-02-09 16:54:10 - passlib.handlers.argon2 - DEBUG - detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-02-09 16:54:10 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:54:10 - app.utils.logging - INFO - POST /inventory/create status=403 duration=0.000s
+2026-02-09 16:54:10 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 403 Forbidden"
+2026-02-09 16:54:10 - asyncio - DEBUG - Using proactor: IocpProactor
+2026-02-09 16:54:10 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 16:54:10 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:56:12 - app.utils.logging - INFO - GET / status=307 duration=0.003s
+2026-02-09 16:56:12 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:56:12 - app.utils.logging - INFO - GET /login status=200 duration=0.003s
+2026-02-09 16:56:12 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 16:56:12 - app.utils.logging - INFO - POST /create_lab status=200 duration=0.147s
+2026-02-09 16:56:12 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 200 OK"
+2026-02-09 16:56:12 - app.dependencies - WARNING - Cross-tenant access attempt by tester
+2026-02-09 16:56:12 - app.utils.logging - INFO - POST /inventory/create status=307 duration=0.003s
+2026-02-09 16:56:12 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 16:56:12 - app.utils.logging - INFO - GET /inventory status=307 duration=0.001s
+2026-02-09 16:56:12 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:01:50 - app.utils.logging - INFO - GET / status=307 duration=0.002s
+2026-02-09 17:01:50 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:01:50 - app.utils.logging - INFO - GET /login status=200 duration=0.003s
+2026-02-09 17:01:50 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:01:50 - app.utils.logging - INFO - POST /create_lab status=200 duration=0.000s
+2026-02-09 17:01:50 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 200 OK"
+2026-02-09 17:01:50 - app.dependencies - WARNING - Cross-tenant access attempt by tester
+2026-02-09 17:01:50 - app.utils.logging - INFO - POST /inventory/create status=307 duration=0.000s
+2026-02-09 17:01:50 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:01:50 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 17:01:50 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:02:21 - app.utils.logging - INFO - GET / status=307 duration=0.003s
+2026-02-09 17:02:21 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:02:21 - app.utils.logging - INFO - GET /login status=200 duration=0.003s
+2026-02-09 17:02:21 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:02:21 - app.utils.logging - INFO - POST /create_lab status=200 duration=0.143s
+2026-02-09 17:02:21 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 200 OK"
+2026-02-09 17:02:21 - app.dependencies - WARNING - Cross-tenant access attempt by tester
+2026-02-09 17:02:21 - app.utils.logging - INFO - POST /inventory/create status=307 duration=0.003s
+2026-02-09 17:02:21 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:02:21 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 17:02:21 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:05:46 - app.utils.logging - INFO - GET / status=307 duration=0.000s
+2026-02-09 17:05:46 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:05:46 - app.utils.logging - INFO - GET /login status=200 duration=0.000s
+2026-02-09 17:05:46 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:05:46 - app.utils.logging - INFO - POST /create_lab status=200 duration=0.000s
+2026-02-09 17:05:46 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 200 OK"
+2026-02-09 17:05:46 - app.dependencies - WARNING - Cross-tenant access attempt by tester
+2026-02-09 17:05:46 - app.utils.logging - INFO - POST /inventory/create status=307 duration=0.000s
+2026-02-09 17:05:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:05:46 - app.utils.logging - INFO - GET /inventory status=307 duration=0.001s
+2026-02-09 17:05:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:06:02 - app.utils.logging - INFO - GET / status=307 duration=0.002s
+2026-02-09 17:06:02 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:06:02 - app.utils.logging - INFO - GET /login status=200 duration=0.002s
+2026-02-09 17:06:02 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:06:02 - app.utils.logging - INFO - POST /create_lab status=200 duration=0.134s
+2026-02-09 17:06:02 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 200 OK"
+2026-02-09 17:06:03 - app.dependencies - WARNING - Cross-tenant access attempt by tester
+2026-02-09 17:06:03 - app.utils.logging - INFO - POST /inventory/create status=307 duration=0.017s
+2026-02-09 17:06:03 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:06:03 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 17:06:03 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:17:00 - app.utils.logging - INFO - GET / status=307 duration=0.000s
+2026-02-09 17:17:00 - httpx - INFO - HTTP Request: GET http://localhost/ "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:17:00 - app.utils.logging - INFO - GET /login status=200 duration=0.006s
+2026-02-09 17:17:00 - httpx - INFO - HTTP Request: GET http://localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:17:01 - app.utils.logging - INFO - POST /create_lab status=200 duration=0.146s
+2026-02-09 17:17:01 - httpx - INFO - HTTP Request: POST http://localhost/create_lab "HTTP/1.1 200 OK"
+2026-02-09 17:17:01 - app.utils.logging - INFO - POST /inventory/create status=303 duration=0.007s
+2026-02-09 17:17:01 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
+2026-02-09 17:17:01 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 17:17:01 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"

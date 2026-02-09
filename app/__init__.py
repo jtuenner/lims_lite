@@ -9,6 +9,8 @@ from fastapi.staticfiles import StaticFiles
 from slowapi.errors import RateLimitExceeded
 from slowapi import _rate_limit_exceeded_handler
 
+from contextlib import asynccontextmanager
+
 from starlette_csrf import CSRFMiddleware  # Requires 'pip install starlette-csrf'
 from starlette.middleware.sessions import SessionMiddleware  # Plural 'sessions'
 from starlette.middleware.trustedhost import TrustedHostMiddleware
@@ -23,6 +25,21 @@ from app.utils.logging import logger
 # Import Routers
 from app.routers import auth, admin, inventory, projects, storage, labs, search, templates_mgmt, files, home
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # --- STARTUP LOGIC ---
+    app.state.start_time = time.time()
+    logger.info(f"LIMS Lite starting in {APP_ENV} mode")
+    # If you still want the scheduler thread (though we discussed moving it)
+    # threading.Thread(target=run_scheduler, daemon=True).start()
+    
+    yield  # The app runs while this is yielding
+    
+    # --- SHUTDOWN LOGIC ---
+    logger.info("LIMS Lite shutting down")
+
+
 def create_app() -> FastAPI:
     """
     Initializes and configures the FastAPI application.
@@ -31,7 +48,8 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="LIMS Lite",
         description="A modular Laboratory Management System",
-        version="1.1.0"
+        version="1.1.0",
+        lifespan = lifespan
     )
 
     # --- MIDDLEWARE CONFIGURATION ---
@@ -102,16 +120,5 @@ def create_app() -> FastAPI:
 
     app.mount("/static", StaticFiles(directory="static"), name="static")
 
-    @app.on_event("startup")
-    async def startup_event():
-        app.state.start_time = time.time()
-        logger.info(f"LIMS Lite starting in {APP_ENV} mode")
-        # REMOVED: The thread starter is gone.
-
-    @app.on_event("shutdown")
-    async def shutdown_event():
-        logger.info("LIMS Lite shutting down")
-
-    return app
 
 app = create_app()
