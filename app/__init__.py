@@ -55,6 +55,15 @@ def create_app() -> FastAPI:
     # --- MIDDLEWARE CONFIGURATION ---
 
     # 1. Session Middleware (Secure Cookies)
+
+    if not IS_TESTING:
+        # 2. CSRF Protection
+        app.add_middleware(
+            CSRFMiddleware,
+            secret=SECRET_KEY,
+            exempt_urls=[re.compile(r"/api/.*")] 
+        )
+        
     app.add_middleware(
         SessionMiddleware, 
         secret_key=SECRET_KEY,
@@ -64,13 +73,6 @@ def create_app() -> FastAPI:
         https_only=APP_ENV == "production"
     )
 
-    if not IS_TESTING:
-        # 2. CSRF Protection
-        app.add_middleware(
-            CSRFMiddleware,
-            secret=SECRET_KEY,
-            exempt_urls=[re.compile(r"/api/.*")] 
-        )
 
     # 3. Trusted Host (Production only)
     if APP_ENV == "production":
