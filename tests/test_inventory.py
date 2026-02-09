@@ -1,5 +1,6 @@
 # tests/test_inventory.py
 from app.models import Consumable, OrderRequest
+from sqlmodel import select
 
 def test_create_and_search_item(client, user_token):
     # Create

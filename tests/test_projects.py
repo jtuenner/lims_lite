@@ -1,5 +1,6 @@
 # tests/test_projects.py
 from app.models import Project, Experiment
+from sqlmodel import select
 
 def test_project_lifecycle(client, user_token, session):
     client.cookies.set("access_token", user_token)

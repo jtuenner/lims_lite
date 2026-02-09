@@ -13,11 +13,13 @@ os.environ["LIMS_SECRET"] = "test_secret_key"
 
 # --- 2. IMPORTS ---
 from app import app # Import directly from the package
-from app.dependencies import get_session
+from app.dependencies import get_session, limiter
 from app.models import User, Lab, Freezer, Box
 from app.utils.security import get_password_hash, create_access_token
 
 TEST_LAB_NAME = "testlab"
+
+limiter.enabled = False
 
 @pytest.fixture(name="session")
 def session_fixture():

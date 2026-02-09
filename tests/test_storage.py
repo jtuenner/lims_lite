@@ -1,5 +1,6 @@
 # tests/test_storage.py
 from app.models import Box, Sample
+from sqlmodel import select
 
 def test_add_sample_collision(client, user_token, session):
     client.cookies.set("access_token", user_token)
@@ -8,10 +9,12 @@ def test_add_sample_collision(client, user_token, session):
     # 1. Add sample to A1 (1,1)
     response = client.post(f"/box/{box.id}/add_sample", data={
         "name": "Sample A", "row": 1, "col": 1, "sample_type": "DNA"
-    })
-    assert response.status_code == 303
+    }, follow_redirects=False) # ADD THIS: Stop at the 303 redirect
+    
+    assert response.status_code == 303 # This will now pass
 
     # 2. Try adding to same slot
+    # Here, we WANT to see the error message in the response text (200 OK)
     response = client.post(f"/box/{box.id}/add_sample", data={
         "name": "Sample B", "row": 1, "col": 1, "sample_type": "DNA"
     })

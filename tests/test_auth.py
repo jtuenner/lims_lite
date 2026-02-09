@@ -1,5 +1,6 @@
 # tests/test_auth.py
 from app.models import User, InviteCode, Lab
+from sqlmodel import select
 
 def test_login_success(client, user_token):
     # We test the endpoint logic, not the UI rendering
@@ -12,9 +13,13 @@ def test_login_failure(client):
 
 def test_registration_flow(client, session):
     """Test full registration lifecycle with invite codes."""
-    # 1. First user becomes Admin automatically (no code needed)
+    # 1. First user becomes Admin automatically
     client.post("/register", data={"username": "admin1", "password": "password123"})
-    assert session.exec(select(User).where(User.username == "admin1")).first().role == "Admin"
+    
+    # Refresh the session to see the new user
+    admin_user = session.exec(select(User).where(User.username == "admin1")).first()
+    assert admin_user is not None
+    assert admin_user.role == "Admin"
 
     # 2. Setup invite code
     code = InviteCode(code="INVITE123", created_by="admin1")
@@ -30,8 +35,9 @@ def test_registration_flow(client, session):
     # 4. Correct code works
     response = client.post("/register", data={
         "username": "user2", "password": "password123", "invite_code": "INVITE123"
-    })
-    assert response.status_code == 303 # Redirect to login
+    }, follow_redirects=False)
+    assert response.status_code == 303
+    assert "/login" in response.headers["location"] # Redirect to login
     
     # 5. Code is now used
     response = client.post("/register", data={

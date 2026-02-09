@@ -10,12 +10,9 @@ from slowapi.util import get_remote_address
 
 # Import models, dependencies, and utilities from your new structure
 from app.models import User, InviteCode, Lab
-from app.dependencies import get_session, get_current_user, get_lab_name, templates
+from app.dependencies import get_session, get_current_user, get_lab_name, templates, limiter
 from app.utils.security import verify_password, get_password_hash, create_access_token
 from app.config import LICENSE_LIMIT, APP_ENV
-
-# Initialize rate limiter
-limiter = Limiter(key_func=get_remote_address)
 
 router = APIRouter(tags=["authentication"])
 

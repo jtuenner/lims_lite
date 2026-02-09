@@ -183,3 +183,252 @@
 2026-02-09 17:17:01 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
 2026-02-09 17:17:01 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
 2026-02-09 17:17:01 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:50:10 - app.utils.logging - INFO - GET / status=200 duration=0.018s
+2026-02-09 17:50:10 - httpx - INFO - HTTP Request: GET http://testlab.localhost/ "HTTP/1.1 200 OK"
+2026-02-09 17:50:10 - app.utils.logging - INFO - POST /login status=200 duration=0.513s
+2026-02-09 17:50:10 - httpx - INFO - HTTP Request: POST http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:50:10 - app.utils.logging - INFO - POST /register status=303 duration=0.035s
+2026-02-09 17:50:10 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 17:50:10 - app.utils.logging - INFO - GET /login status=200 duration=0.001s
+2026-02-09 17:50:10 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:50:11 - app.utils.logging - INFO - POST /inventory/create status=303 duration=0.006s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
+2026-02-09 17:50:11 - app.utils.logging - INFO - GET /inventory status=200 duration=0.010s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 200 OK"
+2026-02-09 17:50:11 - app.utils.logging - INFO - GET /search status=200 duration=0.009s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: GET http://testlab.localhost/search?q=Ethanol "HTTP/1.1 200 OK"
+2026-02-09 17:50:11 - app.utils.logging - INFO - POST /orders/request status=303 duration=0.005s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/request "HTTP/1.1 303 See Other"
+2026-02-09 17:50:11 - app.utils.logging - INFO - GET /inventory status=200 duration=0.004s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 17:50:11 - app.utils.logging - INFO - POST /projects/create status=303 duration=0.005s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: POST http://testlab.localhost/projects/create "HTTP/1.1 303 See Other"
+2026-02-09 17:50:11 - app.utils.logging - INFO - GET /projects status=200 duration=0.005s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects "HTTP/1.1 200 OK"
+2026-02-09 17:50:11 - app.dependencies - WARNING - Cross-tenant access attempt by hacker
+2026-02-09 17:50:11 - app.utils.logging - INFO - GET /inventory status=307 duration=0.002s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:50:11 - app.utils.logging - INFO - GET /admin status=307 duration=0.002s
+2026-02-09 17:50:11 - httpx - INFO - HTTP Request: GET http://testlab.localhost/admin "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:55:45 - app.utils.logging - INFO - GET / status=200 duration=0.017s
+2026-02-09 17:55:45 - httpx - INFO - HTTP Request: GET http://testlab.localhost/ "HTTP/1.1 200 OK"
+2026-02-09 17:55:45 - app.utils.logging - INFO - POST /login status=200 duration=0.516s
+2026-02-09 17:55:45 - httpx - INFO - HTTP Request: POST http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:55:45 - app.utils.logging - INFO - POST /register status=303 duration=0.036s
+2026-02-09 17:55:45 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 17:55:45 - app.utils.logging - INFO - GET /login status=200 duration=0.001s
+2026-02-09 17:55:45 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:55:45 - app.utils.logging - INFO - POST /register status=200 duration=0.004s
+2026-02-09 17:55:45 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /register status=303 duration=0.032s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /login status=200 duration=0.000s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /inventory/create status=303 duration=0.007s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /inventory status=200 duration=0.010s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /search status=200 duration=0.007s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/search?q=Ethanol "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /orders/request status=303 duration=0.006s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/request "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /inventory status=200 duration=0.040s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /orders/update_status status=303 duration=0.005s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/update_status "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /inventory status=200 duration=0.002s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /projects/create status=303 duration=0.004s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/projects/create "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /projects status=200 duration=0.005s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /experiments/create status=303 duration=0.002s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/experiments/create "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /projects/1 status=200 duration=0.013s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects/1 "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /api/experiment/move status=200 duration=0.002s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/api/experiment/move "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.dependencies - WARNING - Cross-tenant access attempt by hacker
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /inventory status=307 duration=0.001s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /admin/ status=403 duration=0.002s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/admin/ "HTTP/1.1 403 Forbidden"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.005s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.014s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.005s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.006s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 17:55:46 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.003s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 17:55:46 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.003s
+2026-02-09 17:55:46 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 17:59:22 - app.utils.logging - INFO - GET / status=200 duration=0.018s
+2026-02-09 17:59:22 - httpx - INFO - HTTP Request: GET http://testlab.localhost/ "HTTP/1.1 200 OK"
+2026-02-09 17:59:22 - app.utils.logging - INFO - POST /login status=200 duration=0.507s
+2026-02-09 17:59:22 - httpx - INFO - HTTP Request: POST http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /register status=303 duration=0.034s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /login status=200 duration=0.001s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /register status=200 duration=0.004s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /register status=303 duration=0.030s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - slowapi - WARNING - ratelimit 3 per 1 hour (testclient) exceeded at endpoint: /register
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /register status=429 duration=0.001s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 429 Too Many Requests"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /inventory/create status=303 duration=0.006s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /inventory status=200 duration=0.012s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /search status=200 duration=0.009s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/search?q=Ethanol "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /orders/request status=303 duration=0.004s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/request "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /inventory status=200 duration=0.002s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /orders/update_status status=303 duration=0.006s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/update_status "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /inventory status=200 duration=0.001s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /projects/create status=303 duration=0.004s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/projects/create "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /projects status=200 duration=0.005s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /experiments/create status=303 duration=0.003s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/experiments/create "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /projects/1 status=200 duration=0.011s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects/1 "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /api/experiment/move status=200 duration=0.002s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/api/experiment/move "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.dependencies - WARNING - Cross-tenant access attempt by hacker
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /inventory status=307 duration=0.000s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /admin/ status=403 duration=0.002s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/admin/ "HTTP/1.1 403 Forbidden"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.007s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.014s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.004s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.005s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 17:59:23 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.003s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 17:59:23 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.002s
+2026-02-09 17:59:23 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - GET / status=200 duration=0.019s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: GET http://testlab.localhost/ "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /login status=200 duration=0.504s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /register status=303 duration=0.034s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 18:00:24 - app.utils.logging - INFO - GET /login status=200 duration=0.001s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /register status=200 duration=0.004s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /register status=303 duration=0.030s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 18:00:24 - slowapi - WARNING - ratelimit 3 per 1 hour (testclient) exceeded at endpoint: /register
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /register status=429 duration=0.001s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 429 Too Many Requests"
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /inventory/create status=303 duration=0.005s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
+2026-02-09 18:00:24 - app.utils.logging - INFO - GET /inventory status=200 duration=0.008s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - GET /search status=200 duration=0.009s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: GET http://testlab.localhost/search?q=Ethanol "HTTP/1.1 200 OK"
+2026-02-09 18:00:24 - app.utils.logging - INFO - POST /orders/request status=303 duration=0.004s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/request "HTTP/1.1 303 See Other"
+2026-02-09 18:00:24 - app.utils.logging - INFO - GET /inventory status=200 duration=0.003s
+2026-02-09 18:00:24 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /orders/update_status status=303 duration=0.005s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/update_status "HTTP/1.1 303 See Other"
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /inventory status=200 duration=0.002s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /projects/create status=303 duration=0.028s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/projects/create "HTTP/1.1 303 See Other"
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /projects status=200 duration=0.006s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /experiments/create status=303 duration=0.004s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/experiments/create "HTTP/1.1 303 See Other"
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /projects/1 status=200 duration=0.012s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects/1 "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /api/experiment/move status=200 duration=0.001s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/api/experiment/move "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.dependencies - WARNING - Cross-tenant access attempt by hacker
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /inventory status=307 duration=0.001s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /admin/ status=403 duration=0.002s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/admin/ "HTTP/1.1 403 Forbidden"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.008s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /box/1/add_sample status=200 duration=0.002s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.004s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.014s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 18:00:25 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.003s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 18:00:25 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.003s
+2026-02-09 18:00:25 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 18:03:26 - app.utils.logging - INFO - GET / status=200 duration=0.018s
+2026-02-09 18:03:26 - httpx - INFO - HTTP Request: GET http://testlab.localhost/ "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /login status=200 duration=0.506s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /register status=303 duration=0.035s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /login status=200 duration=0.000s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/login "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /register status=200 duration=0.005s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /register status=303 duration=0.033s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /register status=200 duration=0.002s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/register "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /inventory/create status=303 duration=0.008s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/inventory/create "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /inventory status=200 duration=0.010s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /search status=200 duration=0.009s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/search?q=Ethanol "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /orders/request status=303 duration=0.005s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/request "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /inventory status=200 duration=0.003s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /orders/update_status status=303 duration=0.006s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/orders/update_status "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /inventory status=200 duration=0.002s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory?tab=orders "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /projects/create status=303 duration=0.003s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/projects/create "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /projects status=200 duration=0.006s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /experiments/create status=303 duration=0.038s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/experiments/create "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /projects/1 status=200 duration=0.013s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/projects/1 "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /api/experiment/move status=200 duration=0.000s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/api/experiment/move "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.dependencies - WARNING - Cross-tenant access attempt by hacker
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /inventory status=307 duration=0.001s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/inventory "HTTP/1.1 307 Temporary Redirect"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /admin/ status=403 duration=0.002s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/admin/ "HTTP/1.1 403 Forbidden"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.008s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /box/1/add_sample status=200 duration=0.002s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.005s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.014s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
+2026-02-09 18:03:27 - app.utils.logging - INFO - POST /box/1/add_sample status=303 duration=0.004s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: POST http://testlab.localhost/box/1/add_sample "HTTP/1.1 303 See Other"
+2026-02-09 18:03:27 - app.utils.logging - INFO - GET /box/1 status=200 duration=0.003s
+2026-02-09 18:03:27 - httpx - INFO - HTTP Request: GET http://testlab.localhost/box/1 "HTTP/1.1 200 OK"
