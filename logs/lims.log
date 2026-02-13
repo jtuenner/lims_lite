@@ -4785,3 +4785,486 @@
 2026-02-13 14:50:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
 2026-02-13 14:50:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
 2026-02-13 14:50:37 - app.utils.logging - INFO - LIMS Lite shutting down
+2026-02-13 15:56:59 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-13 15:56:59 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-13 15:56:59 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-13 15:56:59 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-13 15:56:59 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-13 15:57:00 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-13 15:57:00 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-13 15:57:00 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-13 15:57:00 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-13 15:57:00 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-13 15:57:00 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:01 - asyncio - DEBUG - Using selector: SelectSelector
+2026-02-13 15:57:01 - app.utils.logging - INFO - LIMS Lite starting in development mode
+2026-02-13 15:57:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:04 - app.utils.logging - INFO - GET / status=307 0.035s
+2026-02-13 15:57:04 - app.utils.logging - INFO - GET /login status=200 0.018s
+2026-02-13 15:57:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:06 - app.utils.logging - INFO - GET /register status=200 0.020s
+2026-02-13 15:57:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:10 - app.utils.logging - INFO - DEBUG: Headers: {'host': 'localhost:8000', 'connection': 'keep-alive', 'content-length': '45', 'cache-control': 'max-age=0', 'sec-ch-ua': '"Not(A:Brand";v="8", "Chromium";v="144", "Google Chrome";v="144"', 'sec-ch-ua-mobile': '?0', 'sec-ch-ua-platform': '"Windows"', 'origin': 'http://localhost:8000', 'content-type': 'application/x-www-form-urlencoded', 'upgrade-insecure-requests': '1', 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36', 'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7', 'sec-fetch-site': 'same-origin', 'sec-fetch-mode': 'navigate', 'sec-fetch-user': '?1', 'sec-fetch-dest': 'document', 'referer': 'http://localhost:8000/register', 'accept-encoding': 'gzip, deflate, br, zstd', 'accept-language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7', 'cookie': 'csrftoken=.eJwFwdsOgiAAANB_6b1NnU1evaV5CfFCwksLTXEmmqIbfX3nnJbw8EMJuXFuNmfDLFIT0ACYa4VooNYjZtLIZB1Qm5HSCmGHXVufRJ4mBO4qsLyhvhFEUYy5qSRrmaisEgl5WY7B1YwifV25HEFK-sZsywM-3vY9K3QDBaDj7TevfrTwFBe--tBERJoDl23FBIxz4pprInXc9M_Jt8ydnP7a4zp7.nD-xm4_3lDkQ_AHk2tPergWs9kU'}
+2026-02-13 15:57:10 - app.utils.logging - INFO - DEBUG: Cookies: {'csrftoken': '.eJwFwdsOgiAAANB_6b1NnU1evaV5CfFCwksLTXEmmqIbfX3nnJbw8EMJuXFuNmfDLFIT0ACYa4VooNYjZtLIZB1Qm5HSCmGHXVufRJ4mBO4qsLyhvhFEUYy5qSRrmaisEgl5WY7B1YwifV25HEFK-sZsywM-3vY9K3QDBaDj7TevfrTwFBe--tBERJoDl23FBIxz4pprInXc9M_Jt8ydnP7a4zp7.nD-xm4_3lDkQ_AHk2tPergWs9kU'}
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_name with data[12:20]
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_data with data[21:26]
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_name with data[27:35]
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_data with data[36:45]
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 15:57:10 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2026-02-13 15:57:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:12 - watchfiles.main - DEBUG - 2 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\FETCH_HEAD')}
+2026-02-13 15:57:13 - watchfiles.main - DEBUG - 42 changes detected: {(<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\HEAD.lock'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\remotes\\origin\\main.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\gc.pid.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\HEAD'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\FETCH_HEAD'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\packed-refs.new'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\maintenance.lock'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\packs_HC1OB6'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\HEAD.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\HEAD.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\remotes\\origin\\main.lock'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\heads\\main'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\refs\\remotes\\origin'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\heads\\main.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\packed-refs.new'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\packs_HC1OB6'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\HEAD.lock'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\remotes\\origin'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\heads\\main'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\heads\\main.lock'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\refs\\remotes\\origin\\main.lock'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\packed-refs.lock'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\info\\refs_mi5DeX'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\refs\\heads'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\remotes\\origin\\main'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\refs\\heads\\main.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\packed-refs.lock'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\packed-refs'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\gc.pid'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\info\\refs_mi5DeX'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\refs\\remotes\\origin\\main.lock'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\remotes\\origin\\main'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\refs\\heads\\main.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\gc.pid'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\packed-refs'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\refs\\heads'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\gc.pid.lock'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\logs\\HEAD')}
+2026-02-13 15:57:14 - watchfiles.main - DEBUG - 10 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\commit-graph'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\commit-graph'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\commit-graph.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\gc.pid'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\commit-graph'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info\\commit-graph.lock'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\maintenance.lock'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\objects\\info')}
+2026-02-13 15:57:15 - watchfiles.main - DEBUG - 2 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\.git\\info')}
+2026-02-13 15:57:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 15:57:16 - app.utils.logging - INFO - LIMS Lite shutting down
+2026-02-13 16:01:35 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-13 16:01:35 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-13 16:01:35 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-13 16:01:35 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-13 16:01:35 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-13 16:01:36 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-13 16:01:36 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-13 16:01:36 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-13 16:01:36 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-13 16:01:36 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-13 16:01:36 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:37 - asyncio - DEBUG - Using selector: SelectSelector
+2026-02-13 16:01:37 - app.utils.logging - INFO - LIMS Lite starting in development mode
+2026-02-13 16:01:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:38 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:38 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:38 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:39 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:39 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:39 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:40 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:40 - app.utils.logging - INFO - GET /register status=200 0.040s
+2026-02-13 16:01:40 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:40 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:41 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:41 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:42 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:42 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:42 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:43 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:43 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:260]
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_name with data[261:269]
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_data with data[270:275]
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_name with data[276:284]
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_data with data[285:295]
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:01:45 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2026-02-13 16:01:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:48 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:48 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:01:49 - app.utils.logging - INFO - LIMS Lite shutting down
+2026-02-13 16:05:42 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-13 16:05:42 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-13 16:05:42 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-13 16:05:42 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-13 16:05:42 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-13 16:05:43 - passlib.utils.compat - DEBUG - loaded lazy attr 'SafeConfigParser': <class 'configparser.ConfigParser'>
+2026-02-13 16:05:43 - passlib.utils.compat - DEBUG - loaded lazy attr 'NativeStringIO': <class '_io.StringIO'>
+2026-02-13 16:05:43 - passlib.utils.compat - DEBUG - loaded lazy attr 'BytesIO': <class '_io.BytesIO'>
+2026-02-13 16:05:43 - passlib.registry - DEBUG - registered 'argon2' handler: <class 'passlib.handlers.argon2.argon2'>
+2026-02-13 16:05:43 - passlib.registry - DEBUG - registered 'bcrypt' handler: <class 'passlib.handlers.bcrypt.bcrypt'>
+2026-02-13 16:05:43 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:44 - asyncio - DEBUG - Using selector: SelectSelector
+2026-02-13 16:05:44 - app.utils.logging - INFO - LIMS Lite starting in development mode
+2026-02-13 16:05:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:45 - app.utils.logging - INFO - GET /register status=200 0.037s
+2026-02-13 16:05:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:48 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:48 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:49 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:49 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:49 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:50 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:54]
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_name with data[55:63]
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_data with data[64:69]
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_name with data[70:78]
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_data with data[79:89]
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:05:50 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2026-02-13 16:05:50 - passlib.handlers.argon2 - DEBUG - detected 'argon2_cffi' backend, version '25.1.0', with support for 0x13 argon2 hashes
+2026-02-13 16:05:50 - app.utils.logging - INFO - POST /register status=303 0.097s
+2026-02-13 16:05:50 - app.utils.logging - INFO - GET /login status=200 0.002s
+2026-02-13 16:05:50 - watchfiles.main - DEBUG - 4 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal')}
+2026-02-13 16:05:51 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:51 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:51 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:52 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:52 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:53 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:53 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:53 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:54 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:54 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:55 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:55 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:55 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:54]
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[55:63]
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[64:69]
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[70:78]
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[79:89]
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:05:56 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2026-02-13 16:05:56 - watchfiles.main - DEBUG - 2 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs')}
+2026-02-13 16:05:56 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:56 - app.utils.logging - INFO - POST /login status=303 0.569s
+2026-02-13 16:05:56 - app.utils.logging - INFO - GET / status=200 0.029s
+2026-02-13 16:05:57 - watchfiles.main - DEBUG - 5 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db')}
+2026-02-13 16:05:57 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:57 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:58 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:58 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:58 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:59 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:59 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:05:59 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:00 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:00 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:04 - app.utils.logging - INFO - GET /labs status=200 0.014s
+2026-02-13 16:06:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:06 - app.utils.logging - INFO - GET /calendar/1 status=200 0.010s
+2026-02-13 16:06:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:06 - app.utils.logging - INFO - GET /api/bookings status=200 0.009s
+2026-02-13 16:06:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:09 - app.utils.logging - INFO - GET / status=200 0.012s
+2026-02-13 16:06:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:13 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:13 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:14 - app.utils.logging - INFO - GET /labs status=200 0.007s
+2026-02-13 16:06:14 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:14 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:14 - app.utils.logging - INFO - GET /projects status=200 0.010s
+2026-02-13 16:06:14 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:15 - app.utils.logging - INFO - GET /labs status=200 0.008s
+2026-02-13 16:06:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:15 - app.utils.logging - INFO - GET /calendar/1 status=200 0.007s
+2026-02-13 16:06:15 - app.utils.logging - INFO - GET /api/bookings status=200 0.010s
+2026-02-13 16:06:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:16 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:16 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:17 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:17 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:17 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:18 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:18 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:18 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:19 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:19 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:20 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:20 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:20 - app.utils.logging - INFO - POST /api/bookings/create status=200 0.016s
+2026-02-13 16:06:20 - app.utils.logging - INFO - GET /api/bookings status=200 0.007s
+2026-02-13 16:06:20 - watchfiles.main - DEBUG - 5 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db')}
+2026-02-13 16:06:21 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:21 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:22 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:22 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:22 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:23 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:23 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:23 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:24 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:24 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:25 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:25 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:25 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:26 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:26 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:26 - app.utils.logging - INFO - GET /admin status=307 0.000s
+2026-02-13 16:06:26 - app.utils.logging - INFO - GET /admin/ status=200 0.020s
+2026-02-13 16:06:27 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:27 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:27 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:28 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:28 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:28 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:29 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:29 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:30 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:30 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:30 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:31 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:31 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:32 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:32 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:32 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:33 - app.utils.logging - INFO - POST /admin/generate_invite status=303 0.016s
+2026-02-13 16:06:33 - app.utils.logging - INFO - GET /admin status=307 0.000s
+2026-02-13 16:06:33 - app.utils.logging - INFO - GET /admin/ status=200 0.009s
+2026-02-13 16:06:33 - watchfiles.main - DEBUG - 5 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db')}
+2026-02-13 16:06:33 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:34 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:34 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:35 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:35 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:35 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:36 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:36 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:37 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:38 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:38 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:39 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:39 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:39 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:40 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:40 - app.utils.logging - INFO - GET /register status=200 0.006s
+2026-02-13 16:06:40 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:40 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:41 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:41 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:42 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:42 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:43 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:43 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:43 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:44 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:45 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:46 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:47 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:48 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:48 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:49 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:49 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:49 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:50 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:50 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:51 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:51 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:51 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:52 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:52 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:53 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:53 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:53 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:54 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:54 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:55 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:55 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:55 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:56 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:54]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[55:63]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[64:73]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[74:82]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[83:94]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_name with data[95:106]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_data with data[107:115]
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:06:56 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2026-02-13 16:06:56 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:56 - app.utils.logging - INFO - POST /register status=303 0.057s
+2026-02-13 16:06:56 - app.utils.logging - INFO - GET /login status=200 0.001s
+2026-02-13 16:06:57 - watchfiles.main - DEBUG - 4 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal')}
+2026-02-13 16:06:57 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:57 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:58 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:58 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:58 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:59 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:06:59 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:00 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:00 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:00 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:01 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:02 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_name with data[0:10]
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_data with data[11:54]
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_name with data[55:63]
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_data with data[64:73]
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_start with no data
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_name with data[74:82]
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_data with data[83:94]
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_field_end with no data
+2026-02-13 16:07:02 - python_multipart.multipart - DEBUG - Calling on_end with no data
+2026-02-13 16:07:02 - watchfiles.main - DEBUG - 2 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs')}
+2026-02-13 16:07:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:03 - app.utils.logging - INFO - POST /login status=303 0.536s
+2026-02-13 16:07:03 - app.utils.logging - INFO - GET / status=200 0.015s
+2026-02-13 16:07:03 - watchfiles.main - DEBUG - 5 changes detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log'), (<Change.deleted: 3>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs'), (<Change.added: 1>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db-journal'), (<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\customer_dbs\\devlab.db')}
+2026-02-13 16:07:03 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:04 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:04 - app.utils.logging - INFO - GET /labs status=200 0.008s
+2026-02-13 16:07:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:05 - app.utils.logging - INFO - GET /calendar/1 status=200 0.009s
+2026-02-13 16:07:05 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:05 - app.utils.logging - INFO - GET /api/bookings status=200 0.008s
+2026-02-13 16:07:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:06 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:07 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:08 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:09 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:10 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:10 - app.utils.logging - INFO - GET /templates status=307 0.000s
+2026-02-13 16:07:10 - app.utils.logging - INFO - GET /templates/ status=200 0.010s
+2026-02-13 16:07:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:11 - app.utils.logging - INFO - GET /inventory status=200 0.015s
+2026-02-13 16:07:11 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:12 - app.utils.logging - INFO - GET /templates status=307 0.000s
+2026-02-13 16:07:12 - app.utils.logging - INFO - GET /templates/ status=200 0.007s
+2026-02-13 16:07:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:12 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:12 - app.utils.logging - INFO - GET /projects status=200 0.007s
+2026-02-13 16:07:13 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:13 - app.utils.logging - INFO - GET /projects status=200 0.009s
+2026-02-13 16:07:13 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:13 - app.utils.logging - INFO - GET /labs status=200 0.006s
+2026-02-13 16:07:13 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:14 - app.utils.logging - INFO - GET / status=200 0.012s
+2026-02-13 16:07:14 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:14 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:14 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:15 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:16 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:16 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:16 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:17 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:17 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:17 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:18 - watchfiles.main - DEBUG - 1 change detected: {(<Change.modified: 2>, 'C:\\Users\\Jonas\\Desktop\\CodingProjects\\lims_lite\\logs\\lims.log')}
+2026-02-13 16:07:18 - app.utils.logging - INFO - LIMS Lite shutting down

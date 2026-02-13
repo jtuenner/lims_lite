@@ -21,7 +21,11 @@ router = APIRouter(tags=["authentication"])
 @router.get("/login", response_class=HTMLResponse)
 async def login_page(request: Request):
     """Renders the login page."""
-    return templates.TemplateResponse("login.html", {"request": request})
+    csrf_token = request.session.get("csrf_token", "")
+    return templates.TemplateResponse("login.html", {
+        "request": request,
+        "csrf_token": csrf_token
+    })
 
 @router.post("/login")
 @limiter.limit("5/minute")
@@ -29,13 +33,27 @@ async def login(
     request: Request,
     username: str = Form(...),
     password: str = Form(...),
+    csrf_token: str = Form(...),
     session: Session = Depends(get_session)
 ):
     """Handles user login with rate limiting and secure cookie placement."""
-    if not session:
+    
+    # Validate CSRF token
+    session_token = request.session.get("csrf_token", "")
+    if not csrf_token or csrf_token != session_token:
+        csrf_token_new = request.session.get("csrf_token", "")
         return templates.TemplateResponse("login.html", {
             "request": request,
-            "error": "Service unavailable"
+            "error": "Invalid security token. Please try again.",
+            "csrf_token": csrf_token_new
+        }, status_code=403)
+    
+    if not session:
+        csrf_token_new = request.session.get("csrf_token", "")
+        return templates.TemplateResponse("login.html", {
+            "request": request,
+            "error": "Service unavailable",
+            "csrf_token": csrf_token_new
         })
     
     # Slight delay to mitigate timing attacks
@@ -44,9 +62,11 @@ async def login(
     user = session.exec(select(User).where(User.username == username)).first()
     
     if not user or not verify_password(password, user.hashed_password):
+        csrf_token_new = request.session.get("csrf_token", "")
         return templates.TemplateResponse("login.html", {
             "request": request,
-            "error": "Invalid credentials"
+            "error": "Invalid credentials",
+            "csrf_token": csrf_token_new
         })
     
     # Update last active timestamp
@@ -78,15 +98,13 @@ async def register_page(request: Request, code: str = None, session: Session = D
         return RedirectResponse("/") 
     
     user_count = session.exec(select(func.count(User.id))).one()
-    
-    # Get the token from the scope (populated by the middleware)
-    csrf_token = request.scope.get("csrftoken", "")
+    csrf_token = request.session.get("csrf_token", "")
     
     return templates.TemplateResponse("register.html", {
         "request": request, 
         "code": code, 
         "is_first": (user_count == 0),
-        "csrf_token": csrf_token  # Pass it explicitly to the template
+        "csrf_token": csrf_token
     })
 
 @router.post("/register")
@@ -95,19 +113,37 @@ async def register(
     request: Request,
     username: str = Form(...),
     password: str = Form(...),
+    csrf_token: str = Form(...),
     invite_code: str = Form(None),
     session: Session = Depends(get_session)
 ):
     """Handles new user registration, enforcing invite codes and license limits."""
+    
+    # Validate CSRF token
+    session_token = request.session.get("csrf_token", "")
+    if not csrf_token or csrf_token != session_token:
+        csrf_token_new = request.session.get("csrf_token", "")
+        user_count = session.exec(select(func.count(User.id))).one() if session else 0
+        return templates.TemplateResponse("register.html", {
+            "request": request,
+            "error": "Invalid security token. Please try again.",
+            "is_first": (user_count == 0),
+            "csrf_token": csrf_token_new
+        }, status_code=403)
+    
     if not session:
         return RedirectResponse("/login", status_code=303)
+    
+    csrf_token_new = request.session.get("csrf_token", "")
+    user_count = session.exec(select(func.count(User.id))).one()
     
     # Basic password validation
     if len(password) < 8:
         return templates.TemplateResponse("register.html", {
             "request": request,
             "error": "Password must be at least 8 characters",
-            "is_first": not session.exec(select(User)).first()
+            "is_first": (user_count == 0),
+            "csrf_token": csrf_token_new
         })
     
     # Check if username is already taken
@@ -115,10 +151,10 @@ async def register(
         return templates.TemplateResponse("register.html", {
             "request": request,
             "error": "Username already taken",
-            "is_first": False
+            "is_first": False,
+            "csrf_token": csrf_token_new
         })
 
-    user_count = session.exec(select(func.count(User.id))).one()
     lab_config = session.exec(select(Lab)).first()
     current_limit = lab_config.user_limit if lab_config else LICENSE_LIMIT
     
@@ -129,7 +165,8 @@ async def register(
         if not invite_code: 
             return templates.TemplateResponse("register.html", {
                 "request": request, 
-                "error": "Invite Code Required."
+                "error": "Invite Code Required.",
+                "csrf_token": csrf_token_new
             })
         
         valid_code = session.exec(
@@ -142,14 +179,16 @@ async def register(
         if not valid_code: 
             return templates.TemplateResponse("register.html", {
                 "request": request, 
-                "error": "Invalid or used Invite Code."
+                "error": "Invalid or used Invite Code.",
+                "csrf_token": csrf_token_new
             })
         
         # Enforce seat limits
         if user_count >= current_limit: 
             return templates.TemplateResponse("register.html", {
                 "request": request, 
-                "error": f"Limit Reached ({current_limit} seats)."
+                "error": f"Limit Reached ({current_limit} seats).",
+                "csrf_token": csrf_token_new
             })
             
         valid_code.is_used = True

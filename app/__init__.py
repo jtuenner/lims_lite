@@ -7,7 +7,6 @@ from slowapi.errors import RateLimitExceeded
 from slowapi import _rate_limit_exceeded_handler
 from contextlib import asynccontextmanager
 
-from fastapi_csrf_jinja.middleware import FastAPICSRFJinjaMiddleware
 from starlette.middleware.sessions import SessionMiddleware 
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 
@@ -50,23 +49,20 @@ def create_app() -> FastAPI:
         logger.info(f"{request.method} {request.url.path} status={response.status_code} {process_time:.3f}s")
         return response
 
-    # B. CSRF PROTECTION (Middle layer)
-    if not IS_TESTING:
-        app.add_middleware(
-            FastAPICSRFJinjaMiddleware,
-            secret=SECRET_KEY,
-            exempt_urls=[re.compile(r"/api/.*")] 
-        )
-
-    # DEBUG LOGGING (Inserted between Session and CSRF)
+    # B. CSRF TOKEN GENERATION (Add csrf_token to session and template context)
     @app.middleware("http")
-    async def debug_csrf(request: Request, call_next):
-        if request.method == "POST":
-            # We must use a try/except because reading the form consumes the stream
-            # and might interfere with the actual route if not handled carefully.
-            logger.info(f"DEBUG: Headers: {dict(request.headers)}")
-            logger.info(f"DEBUG: Cookies: {dict(request.cookies)}")
-        return await call_next(request)
+    async def csrf_middleware(request: Request, call_next):
+        import secrets
+        
+        # Generate CSRF token for session if it doesn't exist
+        if "csrf_token" not in request.session:
+            request.session["csrf_token"] = secrets.token_urlsafe(32)
+        
+        # Make token available in request state for templates
+        request.state.csrf_token = request.session.get("csrf_token", "")
+        
+        response = await call_next(request)
+        return response
 
     # A. SESSION MIDDLEWARE (Runs FIRST for requests)
     app.add_middleware(
