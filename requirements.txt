@@ -10,3 +10,4 @@ psutil
 qrcode[pil]
 pydantic-settings
 python-dotenv
+fastapi-csrf-jinja  # Add this line

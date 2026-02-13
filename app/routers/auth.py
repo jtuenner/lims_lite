@@ -74,14 +74,19 @@ async def login(
 
 @router.get("/register", response_class=HTMLResponse)
 async def register_page(request: Request, code: str = None, session: Session = Depends(get_session)):
-    """Renders the registration page, identifying if this is the first user (Admin)."""
     if not session:
         return RedirectResponse("/") 
+    
     user_count = session.exec(select(func.count(User.id))).one()
+    
+    # Get the token from the scope (populated by the middleware)
+    csrf_token = request.scope.get("csrftoken", "")
+    
     return templates.TemplateResponse("register.html", {
         "request": request, 
         "code": code, 
-        "is_first": (user_count == 0)
+        "is_first": (user_count == 0),
+        "csrf_token": csrf_token  # Pass it explicitly to the template
     })
 
 @router.post("/register")
