@@ -13,3 +13,6 @@ uploads/
 # Python cache
 __pycache__/
 *.pyc
+
+#logs
+logs/
